@@ -1,12 +1,14 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from './routes';
 import GlobalStyles from './styles/global';
 
-const App = () => {
+const App = (): JSX.Element => {
   return (
-    <>
+    <Router>
+      <Routes />
       <GlobalStyles />
-      <h1>Kontrola API</h1>
-    </>
+    </Router>
   );
 };
 

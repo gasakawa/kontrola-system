@@ -10,7 +10,8 @@
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly",
-    "__DEV__": "readonly"
+    "__DEV__": "readonly",
+    "JSX": true
   },
   "settings": {
     "import/resolver": {
@@ -21,11 +22,13 @@
     "plugin:@typescript-eslint/recommended",
     "airbnb",
     "plugin:react/recommended",
-    "prettier/@typescript-eslint",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "prettier"
   ],
-  "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
+  "plugins": ["react", "react-hooks", "@typescript-eslint"],
   "rules": {
+    "react/require-default-props": "off",
+    "no-use-before-define": "off",
     "react/display-name": "off",
     "no-param-reassign": "off",
     "react/prop-types": "off",
