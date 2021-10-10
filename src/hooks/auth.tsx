@@ -56,6 +56,9 @@ const AuthProvider: React.FC = ({ children }) => {
     } as UserInfo;
     localStorage.setItem('@Kontrola:token', token);
     localStorage.setItem('@Kontrola:user', JSON.stringify(user));
+    if (api.defaults.headers) {
+      api.defaults.headers['x-access-token'] = token;
+    }
   };
 
   const signOut = (): void => {
