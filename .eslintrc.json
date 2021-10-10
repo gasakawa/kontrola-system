@@ -47,6 +47,8 @@
     "@typescript-eslint/ban-types": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/no-array-index-key": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/explicit-function-return-type": [
       "error",
       {
