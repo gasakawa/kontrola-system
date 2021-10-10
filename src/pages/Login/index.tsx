@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import validator from 'validator';
+import { toast } from 'react-toastify';
 
 import { useAuth } from 'hooks/auth';
 
@@ -27,8 +28,9 @@ const Login = (): JSX.Element => {
     const { username, password } = data;
     try {
       await signIn({ username, password });
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      const { message } = err.response.data;
+      toast.error(message);
     }
   };
   return (
