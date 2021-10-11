@@ -20,8 +20,9 @@ axiosInstance.interceptors.response.use(
       localStorage.removeItem('@Kontrola:user');
       if (axiosInstance.defaults.headers) {
         delete axiosInstance.defaults.headers['x-access-token'];
+        delete axiosInstance.defaults.headers['x-session-id'];
       }
-      if (url !== '/login') {
+      if (url !== '/') {
         window.location.href = '/';
       }
     }

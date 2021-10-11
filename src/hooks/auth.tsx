@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import { SigninResponse } from 'types';
 
 import api from '../services/api';
 
@@ -9,6 +10,8 @@ type UserInfo = {
     company: string;
     profile: number;
     sessionId: string;
+    active: boolean;
+    confirmed: boolean;
   };
 };
 
@@ -47,23 +50,36 @@ const AuthProvider: React.FC = ({ children }) => {
   });
 
   const signIn = async ({ username, password }: SigninCredentials): Promise<void> => {
-    const { data: response } = await api({ url: '/user/signin', method: 'post', data: { username, password } });
+    const { data: response }: { data: SigninResponse } = await api({
+      url: '/user/signin',
+      method: 'post',
+      data: { username, password },
+    });
 
     const { accessToken: token, tokenData } = response;
 
     const user = {
       data: tokenData,
     } as UserInfo;
+
     localStorage.setItem('@Kontrola:token', token);
     localStorage.setItem('@Kontrola:user', JSON.stringify(user));
+
     if (api.defaults.headers) {
       api.defaults.headers['x-access-token'] = token;
+      api.defaults.headers['x-session-id'] = tokenData.sessionId;
     }
   };
 
   const signOut = (): void => {
     localStorage.removeItem('@Kontrola:token');
     localStorage.removeItem('@Kontrola:user');
+
+    if (api.defaults.headers) {
+      delete api.defaults.headers['x-access-token'];
+      delete api.defaults.headers['x-session-id'];
+    }
+
     setData({} as AuthState);
   };
 

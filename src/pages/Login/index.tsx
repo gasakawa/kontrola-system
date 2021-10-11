@@ -7,7 +7,7 @@ import { useAuth } from 'hooks/auth';
 
 import Button from 'components/Button';
 import { ErrorMessage } from '@hookform/error-message';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import * as S from './styles';
 
 type SigninFormData = {
@@ -23,14 +23,20 @@ const Login = (): JSX.Element => {
   } = useForm<SigninFormData>();
 
   const { signIn } = useAuth();
+  const history = useHistory();
 
   const onSubmit = async (data: SigninFormData): Promise<void> => {
     const { username, password } = data;
+
     try {
       await signIn({ username, password });
     } catch (err: any) {
-      const { message } = err.response.data;
-      toast.error(message);
+      const { message, internalCode } = err.response.data;
+      if (internalCode === 'UserNotConfirmed') {
+        history.push(`/user/confirm/${username}`);
+      } else {
+        toast.error(message);
+      }
     }
   };
   return (
