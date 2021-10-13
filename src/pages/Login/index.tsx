@@ -7,7 +7,9 @@ import { useAuth } from 'hooks/auth';
 
 import Button from 'components/Button';
 import { ErrorMessage } from '@hookform/error-message';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { handleError } from 'utils/handle-errors';
+import ButtonLink from 'components/ButtonLink';
 import * as S from './styles';
 
 type SigninFormData = {
@@ -31,9 +33,9 @@ const Login = (): JSX.Element => {
     try {
       await signIn({ username, password });
     } catch (err: any) {
-      const { message, internalCode } = err.response.data;
-      if (internalCode === 'UserNotConfirmed') {
-        history.push(`/user/confirm/${username}`);
+      const { message, code } = handleError(err);
+      if (code === 'UserNotConfirmed') {
+        history.push(`/user/change-initial-password/${username}`);
       } else {
         toast.error(message);
       }
@@ -73,7 +75,14 @@ const Login = (): JSX.Element => {
             <ErrorMessage errors={errors} name="password" />
           </S.Error>
           <Button type="submit">Entrar</Button>
-          <Link to="/forgot-password">Olvidé mi contraseña</Link>
+          <ButtonLink
+            type="button"
+            onClick={() => {
+              history.push('/forgot-password');
+            }}
+          >
+            Olvidé mi contraseña
+          </ButtonLink>
         </form>
       </S.LoginContent>
     </S.LoginWrapper>
