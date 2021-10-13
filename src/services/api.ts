@@ -5,6 +5,7 @@ const axiosInstance = axios.create({
   baseURL: env.baseURL,
   headers: {
     'Content-Type': 'application/json',
+    'x-lang': 'es',
   },
 });
 
