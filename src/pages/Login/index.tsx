@@ -32,10 +32,11 @@ const Login = (): JSX.Element => {
 
     try {
       await signIn({ username, password });
+      history.push('/home');
     } catch (err: any) {
       const { message, code } = handleError(err);
       if (code === 'UserNotConfirmed') {
-        history.push(`/user/first-access`);
+        history.push(`/first-access`);
       } else {
         toast.error(message);
       }

@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import Button from 'components/Button';
 import { ErrorInputText } from 'styles/errors';
 import api from 'services/api';
+import { handleError } from 'utils/handle-errors';
 import * as S from './styles';
 
 type ChangePasswordInput = {
@@ -42,18 +43,25 @@ const ChangeInitialPassword = (): JSX.Element => {
       setShowErrorPassword(true);
     } else {
       setShowErrorPassword(false);
-      const { data: response }: { data: ChangePasswordResponse } = await api({
-        method: 'POST',
-        url: '/user/change_initial_password',
-        data: {
-          username: email,
-          password,
-        },
-      });
 
-      if (response.message === 'Password changed') {
-        toast.success('Primer acceso confirmado');
-        history.push('/');
+      try {
+        const { data: response }: { data: ChangePasswordResponse } = await api({
+          method: 'POST',
+          url: '/user/change_initial_password',
+          data: {
+            username: email,
+            password,
+            tempPassword,
+          },
+        });
+
+        if (response.message === 'Password changed') {
+          toast.success('Primer acceso confirmado');
+          history.push('/');
+        }
+      } catch (err) {
+        const { message } = handleError(err);
+        toast.error(message);
       }
     }
 
