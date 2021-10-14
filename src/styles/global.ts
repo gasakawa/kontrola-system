@@ -25,6 +25,9 @@ body {
     --screen-large: 1170px;
     --screen-medium: 768px;
     --scree-small: 450px;
+
+    --toastify-font-family: 'Montserrat';
+    --toastify-font-size: 0.9rem;
 }
 
 `;

@@ -14,7 +14,7 @@ const App = (): JSX.Element => {
   return (
     <Router>
       <AppProvider>
-        <ToastContainer />
+        <ToastContainer style={{ fontSize: '0.8rem' }} />
         <Routes />
       </AppProvider>
       <GlobalStyles />
