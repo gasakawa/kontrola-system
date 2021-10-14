@@ -35,7 +35,7 @@ const Login = (): JSX.Element => {
     } catch (err: any) {
       const { message, code } = handleError(err);
       if (code === 'UserNotConfirmed') {
-        history.push(`/user/change-initial-password/${username}`);
+        history.push(`/user/first-access`);
       } else {
         toast.error(message);
       }

@@ -72,7 +72,7 @@ export const InputContainer = styled.div<ErrorProps>`
     `}
 
   input {
-    color: #312e38;
+    color: var(--color-text);
     background: transparent;
     flex: 1;
     border: 0;
@@ -80,6 +80,7 @@ export const InputContainer = styled.div<ErrorProps>`
     &::placeholder {
       color: #666360;
     }
+    font-family: 'Montserrat';
   }
 `;
 

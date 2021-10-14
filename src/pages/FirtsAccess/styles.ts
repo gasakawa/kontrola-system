@@ -6,6 +6,10 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+
+  @media (max-width: 450px) {
+    padding: 30px;
+  }
 `;
 
 export const Container = styled.div`
@@ -22,10 +26,14 @@ export const Container = styled.div`
 export const Title = styled.h2`
   font-size: 2rem;
   margin: 10px 10px;
+
+  @media (max-width: 450px) {
+    font-size: 1.8rem;
+  }
 `;
 
 export const Description = styled.div`
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   margin: 10px 10px;
   font-weight: 500;
   background: var(--color-primary);

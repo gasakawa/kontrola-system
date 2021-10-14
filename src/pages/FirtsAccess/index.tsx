@@ -1,9 +1,12 @@
 import React from 'react';
 
 import ChangeInitialPassword from 'components/ChangeInitialPassword';
+import ButtonLink from 'components/ButtonLink';
+import { useHistory } from 'react-router-dom';
 import * as S from './styles';
 
 const FirstAccess = (): JSX.Element => {
+  const history = useHistory();
   return (
     <S.Wrapper>
       <S.Container>
@@ -25,6 +28,14 @@ const FirstAccess = (): JSX.Element => {
         </S.Description>
 
         <ChangeInitialPassword />
+        <ButtonLink
+          type="button"
+          onClick={() => {
+            history.push('/');
+          }}
+        >
+          Volver al login
+        </ButtonLink>
       </S.Container>
     </S.Wrapper>
   );

@@ -8,4 +8,5 @@ export const Container = styled.button`
   cursor: pointer;
   text-decoration: underline;
   margin-top: 15px;
+  font-family: 'Montserrat';
 `;

@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
- 
+
  *{
     margin: 0;
     padding: 0;
@@ -20,6 +20,11 @@ body {
     --color-secondary: #1B2430;
     --color-text: #5E5E5E;
     --color-accent: #61CE70;
+
+    --screen-huge: 1440px;
+    --screen-large: 1170px;
+    --screen-medium: 768px;
+    --scree-small: 450px;
 }
 
 `;

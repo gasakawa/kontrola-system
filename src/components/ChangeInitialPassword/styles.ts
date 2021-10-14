@@ -41,6 +41,7 @@ export const ContentInput = styled.input<ErrorProps>`
   width: 250px;
   border-radius: 8px;
   border: 1px solid #ccc;
+  font-family: 'Montserrat';
 
   padding: 10px;
   margin-top: 10px;
