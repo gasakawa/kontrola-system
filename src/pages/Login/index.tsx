@@ -83,6 +83,14 @@ const Login = (): JSX.Element => {
           >
             Olvidé mi contraseña
           </ButtonLink>
+          <ButtonLink
+            type="button"
+            onClick={() => {
+              history.push('/first-access');
+            }}
+          >
+            ¿Primer acceso?
+          </ButtonLink>
         </form>
       </S.LoginContent>
     </S.LoginWrapper>

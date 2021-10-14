@@ -1,27 +1,20 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 
 import ChangeInitialPassword from 'components/ChangeInitialPassword';
 import * as S from './styles';
 
-type UseConfirmDTO = {
-  email: string;
-};
-
-const InitialPassword = (): JSX.Element => {
-  const params = useParams() as UseConfirmDTO;
-
+const FirstAccess = (): JSX.Element => {
   return (
     <S.Wrapper>
       <S.Container>
         <S.Title>Primer acceso</S.Title>
         <S.Description>
           <p>
-            Para validar su acceso es necesario que cambie su password
+            Para validar su acceso es necesario que cambie su contraseña
             <br />
             <br />
           </p>
-          <p>Tenga en cuenta que su password deve tener los siguientes requisitos:</p>
+          <p>Tenga en cuenta que su contraseña deve tener los siguientes requisitos:</p>
           <ul>
             <li>Mínimo 8 caracteres</li>
             <li>Mínimo 1 número</li>
@@ -31,10 +24,10 @@ const InitialPassword = (): JSX.Element => {
           </ul>
         </S.Description>
 
-        <ChangeInitialPassword email={params.email} />
+        <ChangeInitialPassword />
       </S.Container>
     </S.Wrapper>
   );
 };
 
-export default InitialPassword;
+export default FirstAccess;
