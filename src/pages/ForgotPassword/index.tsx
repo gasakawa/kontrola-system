@@ -1,4 +1,4 @@
-import ResetPassword from 'components/ResetPassword';
+import RequestResetPassword from 'components/RequestResetPassword';
 import React from 'react';
 
 import * as S from './styles';
@@ -9,7 +9,7 @@ const ForgotPassword = (): JSX.Element => {
       <S.Container>
         <S.Title>¿Necesita ayuda con su contraseña?</S.Title>
         <S.Description>Ingrese el e-mail registrado y le ayudaremos a crear una nueva contraseña</S.Description>
-        <ResetPassword />
+        <RequestResetPassword />
       </S.Container>
     </S.Wrapper>
   );

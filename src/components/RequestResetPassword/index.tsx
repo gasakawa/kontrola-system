@@ -8,15 +8,19 @@ import validator from 'validator';
 
 import api from 'services/api';
 import { handleError } from 'utils/handle-errors';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
+import Modal from 'components/Modal';
 import * as S from './styles';
 
 type ResetPasswordData = {
   email: string;
 };
 
-const ResetPassword = (): JSX.Element => {
+const RequestResetPassword = (): JSX.Element => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const history = useHistory();
   const {
     register,
     handleSubmit,
@@ -34,8 +38,8 @@ const ResetPassword = (): JSX.Element => {
         },
       });
 
-      const { codeGenerated, message } = response.data;
-      if (codeGenerated && message === 'Reset Code Send') {
+      const { codeGenerated } = response.data;
+      if (codeGenerated) {
         setShowSuccessMessage(true);
       }
     } catch (err) {
@@ -63,9 +67,22 @@ const ResetPassword = (): JSX.Element => {
         </ErrorInputText>
         <Button type="submit">Enviar</Button>
       </form>
-      {showSuccessMessage && <p>Hemos enviado un e-mail con las instrucciones para cambiar su contraseña</p>}
+
+      {showSuccessMessage && (
+        <Modal
+          icon="envelope"
+          title="Las instrucciones para cambiar su contraseña fueron enviadas"
+          description="Verifique su e-mail y siga las instrucciones para cambiar su contraseña"
+          action={value => {
+            if (value === 'close') {
+              setShowSuccessMessage(false);
+              history.push('/');
+            }
+          }}
+        />
+      )}
     </S.Wrapper>
   );
 };
 
-export default ResetPassword;
+export default RequestResetPassword;
