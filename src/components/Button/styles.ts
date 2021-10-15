@@ -13,4 +13,8 @@ export const Container = styled.button`
   margin-top: 16px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
+
+  &:disabled {
+    background: rgba(0, 0, 0, 0.1);
+  }
 `;
