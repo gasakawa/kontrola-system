@@ -1,20 +1,16 @@
 import React from 'react';
-import { FaRegEnvelope } from 'react-icons/fa';
+import { IconBaseProps } from 'react-icons';
 
 import * as S from './styles';
 
 type ModalProps = {
-  icon?: string;
+  icon?: React.ComponentType<IconBaseProps>;
   title: string;
   description: string;
   action: (action: string) => void;
 };
 
-const icons = {
-  envelope: <FaRegEnvelope size={80} />,
-} as any;
-
-const Modal = ({ icon, title, description, action }: ModalProps): JSX.Element => {
+const Modal = ({ icon: Icon, title, description, action }: ModalProps): JSX.Element => {
   const handleClose = (): void => {
     action('close');
   };
@@ -25,7 +21,7 @@ const Modal = ({ icon, title, description, action }: ModalProps): JSX.Element =>
           &times;
         </span>
         <S.Content>
-          {icons[icon || 'envelope']}
+          {Icon && <Icon size={80} />}
           <S.Title>{title}</S.Title>
           <S.Description>
             <p>{description}</p>

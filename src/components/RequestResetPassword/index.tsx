@@ -10,6 +10,7 @@ import api from 'services/api';
 import { handleError } from 'utils/handle-errors';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { FaRegEnvelope } from 'react-icons/fa';
 
 import Modal from 'components/Modal';
 import * as S from './styles';
@@ -70,7 +71,7 @@ const RequestResetPassword = (): JSX.Element => {
 
       {showSuccessMessage && (
         <Modal
-          icon="envelope"
+          icon={FaRegEnvelope}
           title="Las instrucciones para cambiar su contraseña fueron enviadas"
           description="Verifique su e-mail y siga las instrucciones para cambiar su contraseña"
           action={value => {

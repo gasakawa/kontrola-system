@@ -28,6 +28,11 @@ body {
 
     --toastify-font-family: 'Montserrat';
     --toastify-font-size: 0.9rem;
+
+    --font-title-size: 1.5rem;
+    --font-text-size: 1rem;
+    --font-text-size-sm: 0.8rem;
+    --font-text-size-md: 0.9rem;
 }
 
 `;

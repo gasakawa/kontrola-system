@@ -64,8 +64,6 @@ const ChangeInitialPassword = (): JSX.Element => {
         toast.error(message);
       }
     }
-
-    console.log(password, confirmPassword, email, tempPassword);
   };
 
   const toogleShowConfirmPassword = (): void => {
