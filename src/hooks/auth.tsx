@@ -77,6 +77,8 @@ const AuthProvider: React.FC = ({ children }) => {
       api.defaults.headers['x-session-id'] = tokenData.sessionId;
     }
 
+    setData({ token, user });
+
     return {
       allowLogin: true,
     };
