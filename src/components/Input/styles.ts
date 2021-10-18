@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 interface ContainerProps {
   hasError: boolean;
+  width: string;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -15,7 +16,7 @@ export const Container = styled.div<ContainerProps>`
 
   input {
     height: 40px;
-    width: 250px;
+    width: ${props => props.width};
     border-radius: 8px;
     border: 1px solid #ccc;
     font-family: 'Montserrat';
@@ -47,7 +48,7 @@ export const ContainerPassword = styled.div<ContainerProps>`
 
   input {
     height: 40px;
-    width: 250px;
+    width: ${props => props.width};
     border-radius: 8px;
     border: 1px solid #ccc;
     font-family: 'Montserrat';

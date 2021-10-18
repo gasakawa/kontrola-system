@@ -16,12 +16,28 @@ type Props = {
   errors: any;
   msgError?: string;
   validation: (value: any) => any;
+  width?: 'lg' | 'md' | 'sm';
 };
 
 type InputProps = React.HTMLProps<HTMLInputElement> & Props;
 
-const Input = ({ register, label, required, errors, msgError, type, validation, ...rest }: InputProps): JSX.Element => {
+const Input = ({
+  register,
+  label,
+  required,
+  errors,
+  msgError,
+  type,
+  validation,
+  width = 'lg',
+  ...rest
+}: InputProps): JSX.Element => {
   const [passwordShown, setPasswordShown] = useState(false);
+  const widths = {
+    lg: '250px',
+    md: '150px',
+    sm: '50px',
+  };
 
   const toogleShowPassword = (): void => {
     setPasswordShown(!passwordShown);
@@ -30,7 +46,7 @@ const Input = ({ register, label, required, errors, msgError, type, validation, 
   if (type === 'password') {
     return (
       <>
-        <S.ContainerPassword hasError={!!errors[label]}>
+        <S.ContainerPassword hasError={!!errors[label]} width={widths[width]}>
           <input
             type={passwordShown ? 'text' : type}
             {...register(label, { required: required && msgError ? msgError : false, validate: validation })}
@@ -45,7 +61,7 @@ const Input = ({ register, label, required, errors, msgError, type, validation, 
     );
   }
   return (
-    <S.Container hasError={!!errors[label]}>
+    <S.Container hasError={!!errors[label]} width={widths[width]}>
       <input
         type={type}
         {...register(label, { required: required && msgError ? msgError : false, validate: validation })}

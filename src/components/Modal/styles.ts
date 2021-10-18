@@ -76,5 +76,6 @@ export const Description = styled.div`
     font-size: 1rem;
     color: #fff;
     font-weight: 500;
+    text-align: center;
   }
 `;
