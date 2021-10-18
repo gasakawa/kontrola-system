@@ -12,6 +12,7 @@ import ButtonLink from 'components/ButtonLink';
 import Input from 'components/Input';
 import LimitDevicesModal from 'components/LimitDevicesModal';
 import { SigninDTO } from 'types';
+import Loader from 'components/Loader';
 import * as S from './styles';
 
 type SigninFormData = {
@@ -26,7 +27,7 @@ const Login = (): JSX.Element => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<SigninFormData>();
 
   const { signIn } = useAuth();
@@ -56,6 +57,7 @@ const Login = (): JSX.Element => {
   };
   return (
     <S.LoginWrapper>
+      {isSubmitting && <Loader />}
       <S.LoginContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <h2>Login</h2>
