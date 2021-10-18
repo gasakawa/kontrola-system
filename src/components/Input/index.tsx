@@ -15,7 +15,7 @@ type Props = {
   register: UseFormRegister<FormData>;
   errors: any;
   msgError?: string;
-  validation: (value: any) => any;
+  validation?: (value: any) => any;
   width?: 'lg' | 'md' | 'sm';
 };
 

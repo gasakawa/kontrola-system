@@ -17,8 +17,8 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
   display: flex;
   position: absolute;
-  width: 500px;
-  height: 400px;
+  width: 600px;
+  height: 500px;
 
   span {
     color: #fff;
@@ -41,11 +41,10 @@ export const Container = styled.div`
 export const Content = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
   background: var(--color-secondary);
-  width: 500px;
-  height: 400px;
+  width: 600px;
+  height: 500px;
   padding: 2rem 1rem;
 
   @media (max-width: 450px) {
@@ -73,9 +72,39 @@ export const Title = styled.h2`
 export const Description = styled.div`
   display: flex;
   p {
-    font-size: 1rem;
+    font-size: var(--font-size-text);
     color: #fff;
-    font-weight: 500;
+    font-weight: 400;
     text-align: center;
   }
+`;
+
+export const ActiveSessionGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5rem;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+
+    p {
+      margin-top: 1rem;
+      margin-right: 2rem;
+      font-size: var(--font-text-size-sm);
+    }
+  }
+`;
+
+export const Link = styled.button`
+  background: transparent;
+  border: 0;
+  font-size: var(--font-text-size-sm);
+  color: #fff;
+  cursor: pointer;
+  text-decoration: underline;
+
+  font-family: 'Montserrat';
 `;

@@ -109,7 +109,7 @@ const ResetPassword = (): JSX.Element => {
             label="code"
             register={register}
             maxLength={6}
-            placeholder="Código"
+            placeholder="Código Ej. 569412"
             required
             errors={errors}
             msgError="Campo obligatorio"
@@ -186,6 +186,14 @@ const ResetPassword = (): JSX.Element => {
             Reenviar código
           </ButtonLink>
         )}
+        <ButtonLink
+          type="button"
+          onClick={() => {
+            history.push('/');
+          }}
+        >
+          Volver para login
+        </ButtonLink>
       </S.Container>
       {showSuccessMessage && (
         <Modal

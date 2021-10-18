@@ -14,10 +14,10 @@ const Routes = (): JSX.Element => {
     <>
       <Switch>
         <Route exact component={Login} path="/" />
-        <Route exact component={Home} path="/home" isPrivate />
-        <Route exact component={FirstAccess} path="/first-access" />
-        <Route exact component={ForgotPassword} path="/forgot-password" />
-        <Route exact component={ResetPassword} path="/reset-password" />
+        <Route component={Home} path="/home" isPrivate />
+        <Route component={FirstAccess} path="/first-access" />
+        <Route component={ForgotPassword} path="/forgot-password" />
+        <Route component={ResetPassword} path="/reset-password" />
       </Switch>
     </>
   );

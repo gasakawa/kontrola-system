@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { SigninResponse } from 'types';
+import { SigninDTO, SigninResponse } from 'types';
 
 import api from '../services/api';
 
@@ -21,7 +21,7 @@ type SigninCredentials = {
 };
 
 interface AuthContextData {
-  signIn: (credentials: SigninCredentials) => Promise<void>;
+  signIn: (credentials: SigninCredentials) => Promise<SigninDTO>;
   signOut: () => void;
   user: UserInfo;
   token?: string;
@@ -49,14 +49,21 @@ const AuthProvider: React.FC = ({ children }) => {
     return {} as AuthState;
   });
 
-  const signIn = async ({ username, password }: SigninCredentials): Promise<void> => {
+  const signIn = async ({ username, password }: SigninCredentials): Promise<SigninDTO> => {
     const { data: response }: { data: SigninResponse } = await api({
       url: '/user/signin',
       method: 'post',
       data: { username, password },
     });
 
-    const { accessToken: token, tokenData } = response;
+    const { accessToken: token, tokenData, sessionLimits } = response;
+
+    if (sessionLimits && !sessionLimits.allowLogin) {
+      return {
+        allowLogin: false,
+        sessions: sessionLimits.sessions,
+      };
+    }
 
     const user = {
       data: tokenData,
@@ -69,6 +76,10 @@ const AuthProvider: React.FC = ({ children }) => {
       api.defaults.headers['x-access-token'] = token;
       api.defaults.headers['x-session-id'] = tokenData.sessionId;
     }
+
+    return {
+      allowLogin: true,
+    };
   };
 
   const signOut = (): void => {

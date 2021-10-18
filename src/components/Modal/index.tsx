@@ -8,9 +8,10 @@ type ModalProps = {
   title: string;
   description: string;
   action: (action: string) => void;
+  children?: JSX.Element;
 };
 
-const Modal = ({ icon: Icon, title, description, action }: ModalProps): JSX.Element => {
+const Modal = ({ icon: Icon, title, description, action, children }: ModalProps): JSX.Element => {
   const handleClose = (): void => {
     action('close');
   };
@@ -26,6 +27,7 @@ const Modal = ({ icon: Icon, title, description, action }: ModalProps): JSX.Elem
           <S.Description>
             <p>{description}</p>
           </S.Description>
+          {children}
         </S.Content>
       </S.Container>
     </S.Wrapper>

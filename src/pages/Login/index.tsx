@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import validator from 'validator';
 import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
+import { handleError } from 'utils/handle-errors';
 
 import { useAuth } from 'hooks/auth';
 
 import Button from 'components/Button';
-import { ErrorMessage } from '@hookform/error-message';
-import { useHistory } from 'react-router-dom';
-import { handleError } from 'utils/handle-errors';
 import ButtonLink from 'components/ButtonLink';
+import Input from 'components/Input';
+import LimitDevicesModal from 'components/LimitDevicesModal';
+import { SigninDTO } from 'types';
 import * as S from './styles';
 
 type SigninFormData = {
@@ -18,6 +20,9 @@ type SigninFormData = {
 };
 
 const Login = (): JSX.Element => {
+  const [showSessionLimitModal, setShowSessionLimitModal] = useState(false);
+  const [sessions, setSessions] = useState<SigninDTO>();
+
   const {
     handleSubmit,
     register,
@@ -31,8 +36,15 @@ const Login = (): JSX.Element => {
     const { username, password } = data;
 
     try {
-      await signIn({ username, password });
-      history.push('/home');
+      const response = await signIn({ username, password });
+      if (response.allowLogin) {
+        history.push('/home');
+      } else {
+        setShowSessionLimitModal(true);
+        if (response.sessions) {
+          setSessions(response);
+        }
+      }
     } catch (err: any) {
       const { message, code } = handleError(err);
       if (code === 'UserNotConfirmed') {
@@ -47,34 +59,27 @@ const Login = (): JSX.Element => {
       <S.LoginContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <h2>Login</h2>
-          <S.InputContainer hasError={!!errors.username}>
-            <input
-              type="text"
-              id="username"
-              placeholder="E-mail"
-              {...register('username', {
-                required: 'E-mail obligatorio',
-                validate: value => {
-                  return validator.isEmail(value) || 'E-mail inválido';
-                },
-              })}
-            />
-          </S.InputContainer>
-          <S.Error>
-            <ErrorMessage errors={errors} name="username" />
-          </S.Error>
-
-          <S.InputContainer hasError={!!errors.password}>
-            <input
-              type="password"
-              id="password"
-              placeholder="Password"
-              {...register('password', { required: 'Password obligatorio' })}
-            />
-          </S.InputContainer>
-          <S.Error>
-            <ErrorMessage errors={errors} name="password" />
-          </S.Error>
+          <Input
+            type="text"
+            label="username"
+            register={register}
+            placeholder="E-mail"
+            required
+            errors={errors}
+            msgError="Campo obligatorio"
+            validation={value => {
+              return validator.isEmail(value) || 'El valor ingresado no parece ser un e-mail';
+            }}
+          />
+          <Input
+            type="password"
+            label="password"
+            register={register}
+            placeholder="Contraseña"
+            required
+            errors={errors}
+            msgError="Campo obligatorio"
+          />
           <Button type="submit">Entrar</Button>
           <ButtonLink
             type="button"
@@ -94,6 +99,16 @@ const Login = (): JSX.Element => {
           </ButtonLink>
         </form>
       </S.LoginContent>
+      {showSessionLimitModal && (
+        <LimitDevicesModal
+          sessions={sessions}
+          action={value => {
+            if (value === 'close') {
+              setShowSessionLimitModal(false);
+            }
+          }}
+        />
+      )}
     </S.LoginWrapper>
   );
 };
