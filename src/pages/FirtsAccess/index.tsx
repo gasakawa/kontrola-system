@@ -3,12 +3,15 @@ import React from 'react';
 import ChangeInitialPassword from 'components/ChangeInitialPassword';
 import ButtonLink from 'components/ButtonLink';
 import { useHistory } from 'react-router-dom';
+import logo from 'assets/logo-kontrola-color.svg';
 import * as S from './styles';
 
 const FirstAccess = (): JSX.Element => {
   const history = useHistory();
   return (
     <S.Wrapper>
+      <img src={logo} alt="Kontrola" />
+
       <S.Container>
         <S.Title>Primer acceso</S.Title>
         <S.Description>

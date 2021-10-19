@@ -15,6 +15,7 @@ import LimitDevicesModal from 'components/LimitDevicesModal';
 import { SigninDTO } from 'types';
 import Loader from 'components/Loader';
 import { SessionInfo } from 'types/session';
+import logo from 'assets/logo-kontrola-color.svg';
 import * as S from './styles';
 
 type SigninFormData = {
@@ -70,6 +71,7 @@ const Login = (): JSX.Element => {
   return (
     <S.LoginWrapper>
       {isSubmitting && <Loader />}
+      <img src={logo} alt="Kontrola" />
       <S.LoginContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <h2>Login</h2>

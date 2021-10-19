@@ -5,6 +5,12 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+
+  img {
+    margin: 2rem;
+    width: 300px;
+  }
 
   @media (max-width: 450px) {
     padding: 30px;

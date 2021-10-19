@@ -9,7 +9,13 @@ export const LoginWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   height: 100vh;
+
+  img {
+    margin: 2rem;
+    width: 300px;
+  }
 `;
 
 export const LoginContent = styled.div`

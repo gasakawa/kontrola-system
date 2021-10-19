@@ -7,6 +7,11 @@ export const Wrapper = styled.div`
   align-items: center;
   height: 100vh;
 
+  img {
+    margin: 2rem;
+    width: 300px;
+  }
+
   @media (max-width: 450px) {
     padding: 30px;
   }
