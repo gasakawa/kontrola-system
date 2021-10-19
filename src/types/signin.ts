@@ -1,3 +1,5 @@
+import { SessionInfo } from './session';
+
 export type SigninResponse = {
   accessToken: string;
   expiresIn: number;
@@ -22,6 +24,7 @@ export type SigninResponse = {
         id: string;
         createdAt: Date;
         email: string;
+        details: SessionInfo;
       },
     ];
   };
@@ -34,6 +37,7 @@ export type SigninDTO = {
       id: string;
       createdAt: Date;
       email: string;
+      details: SessionInfo;
     },
   ];
 };

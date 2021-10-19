@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import validator from 'validator';
 import { toast } from 'react-toastify';
@@ -13,11 +14,13 @@ import Input from 'components/Input';
 import LimitDevicesModal from 'components/LimitDevicesModal';
 import { SigninDTO } from 'types';
 import Loader from 'components/Loader';
+import { SessionInfo } from 'types/session';
 import * as S from './styles';
 
 type SigninFormData = {
   username: string;
   password: string;
+  sessionInfo: SessionInfo;
 };
 
 const Login = (): JSX.Element => {
@@ -37,7 +40,16 @@ const Login = (): JSX.Element => {
     const { username, password } = data;
 
     try {
-      const response = await signIn({ username, password });
+      const { data: responseIP } = await axios.get<SessionInfo>(`https://ip.nf/me.json`);
+      const ipInfo = responseIP.ip as any;
+
+      const { city, country, ip, hostname, latitude, longitude } = ipInfo as SessionInfo;
+
+      const response = await signIn({
+        username,
+        password,
+        sessionInfo: { city, country, ip, hostname, latitude, longitude },
+      });
       if (response.allowLogin) {
         history.push('/home');
       } else {

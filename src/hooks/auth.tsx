@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { SigninDTO, SigninResponse } from 'types';
+import { SessionInfo } from 'types/session';
 
 import api from '../services/api';
 
@@ -18,6 +19,7 @@ type UserInfo = {
 type SigninCredentials = {
   username: string;
   password: string;
+  sessionInfo: SessionInfo;
 };
 
 interface AuthContextData {
@@ -49,11 +51,11 @@ const AuthProvider: React.FC = ({ children }) => {
     return {} as AuthState;
   });
 
-  const signIn = async ({ username, password }: SigninCredentials): Promise<SigninDTO> => {
+  const signIn = async ({ username, password, sessionInfo }: SigninCredentials): Promise<SigninDTO> => {
     const { data: response }: { data: SigninResponse } = await api({
       url: '/user/signin',
       method: 'post',
-      data: { username, password },
+      data: { username, password, sessionInfo },
     });
 
     const { accessToken: token, tokenData, sessionLimits } = response;

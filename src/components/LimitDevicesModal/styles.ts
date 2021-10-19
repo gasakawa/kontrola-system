@@ -20,6 +20,11 @@ export const Container = styled.div`
   width: 600px;
   height: 500px;
 
+  @media (max-width: 450px) {
+    width: 400px;
+    height: 300px;
+  }
+
   span {
     color: #fff;
     font-size: 2rem;
@@ -49,6 +54,8 @@ export const Content = styled.div`
 
   @media (max-width: 450px) {
     padding: 2rem;
+    width: 400px;
+    height: 300px;
   }
 
   svg {
@@ -58,7 +65,7 @@ export const Content = styled.div`
 `;
 
 export const Title = styled.h2`
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #fff;
   font-weight: 600;
   text-align: center;
@@ -71,8 +78,13 @@ export const Title = styled.h2`
 
 export const Description = styled.div`
   display: flex;
+
+  @media (max-width: 450px) {
+    width: 60%;
+  }
+
   p {
-    font-size: var(--font-size-text);
+    font-size: var(--font-text-size-md);
     color: #fff;
     font-weight: 400;
     text-align: center;
@@ -85,9 +97,10 @@ export const ActiveSessionGrid = styled.div`
   margin-top: 1.5rem;
 
   div {
+    flex: 1;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     color: #fff;
 
     p {

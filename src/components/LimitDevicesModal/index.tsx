@@ -51,10 +51,9 @@ const LimitDevicesModal = ({ sessions, action }: SessionLimitProps): JSX.Element
             {sessions?.sessions &&
               sessions.sessions.map(session => (
                 <div key={session.id}>
-                  <p>{format(parseISO(`${session.createdAt}`), 'dd/MM/yyyy')}</p>
-                  <p>-</p>
-                  <p>{session.email}</p>
-                  <p>-</p>
+                  <p>
+                    {format(parseISO(`${session.createdAt}`), 'dd/MM/yyyy')} | {session.details.city} | {session.email}
+                  </p>
                   <p>
                     <S.Link
                       onClick={() => {
