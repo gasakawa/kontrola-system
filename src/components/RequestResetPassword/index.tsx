@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form';
 
 import Button from 'components/Button';
-import { ErrorInputText } from 'styles/errors';
 import validator from 'validator';
 
 import api from 'services/api';
@@ -13,6 +11,8 @@ import { toast } from 'react-toastify';
 import { FaRegEnvelope } from 'react-icons/fa';
 
 import Modal from 'components/Modal';
+import Input from 'components/Input';
+import Loader from 'components/Loader';
 import * as S from './styles';
 
 type ResetPasswordData = {
@@ -25,7 +25,7 @@ const RequestResetPassword = (): JSX.Element => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ResetPasswordData>();
 
   const onSubmit = async ({ email }: ResetPasswordData): Promise<void> => {
@@ -51,21 +51,21 @@ const RequestResetPassword = (): JSX.Element => {
 
   return (
     <S.Wrapper>
+      {isSubmitting && <Loader />}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <S.Input
+        <Input
           type="text"
+          label="email"
+          register={register}
           placeholder="E-mail"
-          hasError={!!errors.email}
-          {...register('email', {
-            required: 'Campo obligatorio',
-            validate: value => {
-              return validator.isEmail(value) || 'El valor ingresado no parece ser un e-mail';
-            },
-          })}
+          required
+          errors={errors}
+          msgError="Campo obligatorio"
+          validation={value => {
+            return validator.isEmail(value) || 'El valor ingresado no parece ser un e-mail';
+          }}
         />
-        <ErrorInputText>
-          <ErrorMessage errors={errors} name="email" />
-        </ErrorInputText>
+
         <Button type="submit">Enviar</Button>
       </form>
 
