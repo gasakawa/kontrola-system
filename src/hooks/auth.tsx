@@ -78,6 +78,7 @@ const AuthProvider: React.FC = ({ children }) => {
     if (api.defaults.headers) {
       api.defaults.headers['x-access-token'] = token;
       api.defaults.headers['x-session-id'] = tokenData.sessionId;
+      api.defaults.headers['x-user-sub'] = tokenData.sub;
     }
 
     setData({ token, user });
@@ -100,6 +101,7 @@ const AuthProvider: React.FC = ({ children }) => {
       if (api.defaults.headers) {
         delete api.defaults.headers['x-access-token'];
         delete api.defaults.headers['x-session-id'];
+        delete api.defaults.headers['x-user-sub'];
       }
     }
 

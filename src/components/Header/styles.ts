@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.nav`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   height: 65px;
   border-radius: 10px;
@@ -22,6 +22,17 @@ export const Content = styled.div`
   justify-content: center;
   margin-right: 1rem;
   padding: 1.5rem;
+`;
+
+export const ContentCompany = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 1rem;
+
+  img {
+    height: 60px;
+    width: 100;
+  }
 `;
 
 export const ContentUser = styled.div`
