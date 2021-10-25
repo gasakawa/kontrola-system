@@ -13,6 +13,7 @@ type UserInfo = {
     sessionId: string;
     active: boolean;
     confirmed: boolean;
+    profilePicUrl: string;
   };
 };
 
@@ -86,13 +87,20 @@ const AuthProvider: React.FC = ({ children }) => {
     };
   };
 
-  const signOut = (): void => {
-    localStorage.removeItem('@Kontrola:token');
-    localStorage.removeItem('@Kontrola:user');
+  const signOut = async (): Promise<void> => {
+    const user = localStorage.getItem('@Kontrola:user');
+    if (user) {
+      const userObj = JSON.parse(user) as UserInfo;
 
-    if (api.defaults.headers) {
-      delete api.defaults.headers['x-access-token'];
-      delete api.defaults.headers['x-session-id'];
+      await api.put(`/session/signout/${userObj.data.sessionId}`);
+
+      localStorage.removeItem('@Kontrola:token');
+      localStorage.removeItem('@Kontrola:user');
+
+      if (api.defaults.headers) {
+        delete api.defaults.headers['x-access-token'];
+        delete api.defaults.headers['x-session-id'];
+      }
     }
 
     setData({} as AuthState);

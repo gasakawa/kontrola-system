@@ -9,7 +9,7 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
 }
 body {
-    background-color: #fff;
+    background-color: #f8f8f8;
     color: #2f3459;
     -webkit-font-smoothing: antialiased;
     font-family: "Montserrat", sans-serif;

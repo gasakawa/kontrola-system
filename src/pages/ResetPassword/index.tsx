@@ -68,7 +68,7 @@ const ResetPassword = (): JSX.Element => {
         }
       } catch (err) {
         const { message, code: errorCode } = handleError(err);
-        if (errorCode === 'ExpiredCodeException') {
+        if (errorCode === 'ExpiredCodeException' || errorCode === 'CodeMismatchException') {
           setShowRequestCode(true);
         }
         toast.error(message);
