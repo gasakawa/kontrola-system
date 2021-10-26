@@ -1,8 +1,10 @@
 import React from 'react';
 
-import logo from 'assets/logo-kontrola-color.svg';
 import { useAuth } from 'hooks/auth';
 import ButtonLink from 'components/ButtonLink';
+import Menu from 'components/Menu';
+
+import logo from 'assets/logo-kontrola-color.svg';
 import * as S from './styles';
 
 const Sidebar = (): JSX.Element => {
@@ -17,6 +19,8 @@ const Sidebar = (): JSX.Element => {
           Salir
         </ButtonLink>
       </S.Logout>
+
+      <Menu />
     </S.Wrapper>
   );
 };
