@@ -20,6 +20,7 @@ body {
     --color-secondary: #1B2430;
     --color-text: #5E5E5E;
     --color-accent: #61CE70;
+    --color-main-bg: #f8f8f8;
 
     --screen-huge: 1440px;
     --screen-large: 1170px;
