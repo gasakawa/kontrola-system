@@ -7,28 +7,22 @@ import Login from 'pages/Login';
 import FirstAccess from 'pages/FirtsAccess';
 import ForgotPassword from 'pages/ForgotPassword';
 import ResetPassword from 'pages/ResetPassword';
-import { useAuth } from 'hooks/auth';
-import Sidebar from 'components/Sidebar';
-import Header from 'components/Header';
+
+import Layout from 'components/Layout';
 import Route from './route';
 
 const Routes = (): JSX.Element => {
-  const { user } = useAuth();
   return (
     <>
-      {!!user && (
-        <>
-          <Sidebar />
-          <Header />
-        </>
-      )}
-      <Switch>
-        <Route exact component={Login} path="/" />
-        <Route component={Home} path="/home" isPrivate />
-        <Route component={FirstAccess} path="/first-access" />
-        <Route component={ForgotPassword} path="/forgot-password" />
-        <Route component={ResetPassword} path="/reset-password" />
-      </Switch>
+      <Layout>
+        <Switch>
+          <Route exact component={Login} path="/" />
+          <Route component={Home} path="/home" isPrivate />
+          <Route component={FirstAccess} path="/first-access" />
+          <Route component={ForgotPassword} path="/forgot-password" />
+          <Route component={ResetPassword} path="/reset-password" />
+        </Switch>
+      </Layout>
     </>
   );
 };

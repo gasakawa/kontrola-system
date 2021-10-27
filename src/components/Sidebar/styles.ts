@@ -26,5 +26,13 @@ export const LogoWrapper = styled.div`
 
 export const Logout = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: center;
+
+  svg {
+    color: var(--color-primary);
+    font-weight: 500;
+    margin-left: 5px;
+    cursor: pointer;
+  }
 `;

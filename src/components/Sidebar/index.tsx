@@ -5,6 +5,7 @@ import ButtonLink from 'components/ButtonLink';
 import Menu from 'components/Menu';
 
 import logo from 'assets/logo-kontrola-color.svg';
+import { FiLogOut } from 'react-icons/fi';
 import * as S from './styles';
 
 const Sidebar = (): JSX.Element => {
@@ -18,6 +19,7 @@ const Sidebar = (): JSX.Element => {
         <ButtonLink type="button" onClick={signOut}>
           Salir
         </ButtonLink>
+        <FiLogOut size={18} onClick={signOut} />
       </S.Logout>
 
       <Menu />
