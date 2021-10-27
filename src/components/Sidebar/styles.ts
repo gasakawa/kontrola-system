@@ -36,3 +36,12 @@ export const Logout = styled.div`
     cursor: pointer;
   }
 `;
+
+export const VendorLogo = styled.div`
+  position: absolute;
+  bottom: 0;
+
+  img {
+    width: 52px;
+  }
+`;

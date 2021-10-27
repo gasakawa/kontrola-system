@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaIdCard, FaUserCog, FaRegCopy, FaRegBuilding } from 'react-icons/fa';
 import { MdFormatSize, MdAttachMoney, MdNotifications } from 'react-icons/md';
-import { FiUsers, FiTool, FiFileText, FiChevronDown, FiUser } from 'react-icons/fi';
+import { FiUsers, FiTool, FiFileText, FiChevronDown, FiUser, FiChevronUp } from 'react-icons/fi';
 import { BsFillCalculatorFill, BsFillGearFill, BsCalendarDate } from 'react-icons/bs';
 import { MenuIcons, Module } from 'types';
 import { Link } from 'react-router-dom';
@@ -39,7 +39,7 @@ const MenuItem = ({ module }: MenuItemProps): JSX.Element => {
           <S.MenuItemIcon>{icons[module.icon]}</S.MenuItemIcon>
           <S.MenuItemDescription>
             <span>{module.name}</span>
-            <FiChevronDown size={16} />
+            {!showMenu ? <FiChevronDown size={16} /> : <FiChevronUp size={16} />}
           </S.MenuItemDescription>
         </S.ItemWrapper>
         <S.MenuParentContent show={showMenu}>

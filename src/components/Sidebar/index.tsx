@@ -6,6 +6,7 @@ import Menu from 'components/Menu';
 
 import logo from 'assets/logo-kontrola-color.svg';
 import { FiLogOut } from 'react-icons/fi';
+import ag7 from 'assets/ag7-favicon.png';
 import * as S from './styles';
 
 const Sidebar = (): JSX.Element => {
@@ -23,6 +24,11 @@ const Sidebar = (): JSX.Element => {
       </S.Logout>
 
       <Menu />
+      <S.VendorLogo>
+        <a href="https://ag7digital.com" target="_blank" rel="noopener noreferrer">
+          <img src={ag7} alt="AG7 Digital Business" />
+        </a>
+      </S.VendorLogo>
     </S.Wrapper>
   );
 };

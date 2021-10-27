@@ -33,7 +33,7 @@ export const MenuParentItem = styled.li`
   padding: 0.9rem 1rem;
 
   &:hover {
-    border-left: 3px solid rgba(0, 0, 0, 60%);
+    transform: translateX(10px);
   }
 
   span {
@@ -74,9 +74,6 @@ export const MenuItemDescription = styled.div`
     text-decoration: none;
     cursor: pointer;
     color: var(--color-primary);
-    &:hover {
-      border-bottom: 3px solid rgba(0, 0, 0, 60%);
-    }
   }
 
   svg {
@@ -91,7 +88,10 @@ export const MenuChildrenItem = styled.li`
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  padding: 0.9rem 1rem;
-  border-radius: 8px;
-  background: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+
+  &:hover {
+    background: var(--color-main-bg);
+  }
 `;
