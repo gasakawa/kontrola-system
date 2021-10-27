@@ -1,21 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
-import { SigninDTO, SigninResponse } from 'types';
+import { SigninDTO, SigninResponse, UserInfo } from 'types';
 import { SessionInfo } from 'types/session';
 
 import api from '../services/api';
-
-type UserInfo = {
-  data: {
-    sub: string;
-    name: string;
-    company: string;
-    profile: number;
-    sessionId: string;
-    active: boolean;
-    confirmed: boolean;
-    profilePicUrl: string;
-  };
-};
 
 type SigninCredentials = {
   username: string;
@@ -75,12 +62,6 @@ const AuthProvider: React.FC = ({ children }) => {
     localStorage.setItem('@Kontrola:token', token);
     localStorage.setItem('@Kontrola:user', JSON.stringify(user));
 
-    if (api.defaults.headers) {
-      api.defaults.headers['x-access-token'] = token;
-      api.defaults.headers['x-session-id'] = tokenData.sessionId;
-      api.defaults.headers['x-user-sub'] = tokenData.sub;
-    }
-
     setData({ token, user });
 
     return {
@@ -97,12 +78,6 @@ const AuthProvider: React.FC = ({ children }) => {
 
       localStorage.removeItem('@Kontrola:token');
       localStorage.removeItem('@Kontrola:user');
-
-      if (api.defaults.headers) {
-        delete api.defaults.headers['x-access-token'];
-        delete api.defaults.headers['x-session-id'];
-        delete api.defaults.headers['x-user-sub'];
-      }
     }
 
     setData({} as AuthState);

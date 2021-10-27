@@ -41,3 +41,16 @@ export type SigninDTO = {
     },
   ];
 };
+
+export type UserInfo = {
+  data: {
+    sub: string;
+    name: string;
+    company: string;
+    profile: number;
+    sessionId: string;
+    active: boolean;
+    confirmed: boolean;
+    profilePicUrl: string;
+  };
+};

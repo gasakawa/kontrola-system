@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getToken, getUser } from 'utils/storage-helper';
 import env from '../config/env';
 
 const axiosInstance = axios.create({
@@ -27,6 +28,28 @@ axiosInstance.interceptors.response.use(
         window.location.href = '/';
       }
     }
+    return Promise.reject(error);
+  },
+);
+
+axiosInstance.interceptors.request.use(
+  request => {
+    const token = getToken();
+    const user = getUser();
+    if (token) {
+      if (request.headers) {
+        request.headers['x-access-token'] = token;
+      }
+      if (user) {
+        if (request.headers) {
+          request.headers['x-session-id'] = user.data.sessionId;
+          request.headers['x-user-sub'] = user.data.sub;
+        }
+      }
+    }
+    return request;
+  },
+  error => {
     return Promise.reject(error);
   },
 );
