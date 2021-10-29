@@ -34,6 +34,8 @@ body {
     --font-text-size: 1rem;
     --font-text-size-sm: 0.8rem;
     --font-text-size-md: 0.9rem;
+
+    --box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
 }
 
 `;

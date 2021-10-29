@@ -9,6 +9,7 @@ import ForgotPassword from 'pages/ForgotPassword';
 import ResetPassword from 'pages/ResetPassword';
 
 import Layout from 'components/Layout';
+import Profile from 'pages/Profile';
 import Route from './route';
 
 const Routes = (): JSX.Element => {
@@ -21,6 +22,7 @@ const Routes = (): JSX.Element => {
           <Route component={FirstAccess} path="/first-access" />
           <Route component={ForgotPassword} path="/forgot-password" />
           <Route component={ResetPassword} path="/reset-password" />
+          <Route component={Profile} path="/me/profile" isPrivate />
         </Switch>
       </Layout>
     </>

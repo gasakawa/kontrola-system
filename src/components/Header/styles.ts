@@ -58,8 +58,8 @@ export const ContentAvatar = styled.div`
 
   img {
     border-radius: 50%;
-    height: 100%;
-    width: 100;
+    height: 56px;
+    width: 56px;
   }
 
   svg {
