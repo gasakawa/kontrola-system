@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaIdCard, FaUserCog, FaRegCopy, FaRegBuilding } from 'react-icons/fa';
 import { MdFormatSize, MdAttachMoney, MdNotifications } from 'react-icons/md';
-import { FiUsers, FiTool, FiFileText, FiChevronDown, FiUser, FiChevronUp } from 'react-icons/fi';
+import { FiUsers, FiTool, FiFileText, FiChevronDown, FiUser, FiChevronUp, FiLock } from 'react-icons/fi';
 import { BsFillCalculatorFill, BsFillGearFill, BsCalendarDate } from 'react-icons/bs';
 import { MenuIcons, Module } from 'types';
 import { Link } from 'react-router-dom';
@@ -27,6 +27,7 @@ const icons = {
   'md-notifications': <MdNotifications size={20} />,
   'fa-reg-building': <FaRegBuilding size={20} />,
   'bs-calendar-date': <BsCalendarDate size={20} />,
+  'gr-key': <FiLock size={20} />,
 } as MenuIcons;
 
 const MenuItem = ({ module }: MenuItemProps): JSX.Element => {

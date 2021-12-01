@@ -1,4 +1,3 @@
-import Button from 'components/Button';
 import React from 'react';
 import { FaRegBuilding } from 'react-icons/fa';
 import { FiCheck, FiPhone } from 'react-icons/fi';
@@ -21,9 +20,6 @@ const ProfileInfo = ({ user }: ProfileInfoProps): JSX.Element => {
           <h2>{user.name}</h2>
           <span>{user.email}</span>
         </S.UserInfo>
-        <S.ButtonContainer>
-          <Button type="button">Editar</Button>
-        </S.ButtonContainer>
       </S.UserWrapper>
       <S.UserDetail>
         <S.UserDetailLine>

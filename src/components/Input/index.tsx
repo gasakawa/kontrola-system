@@ -16,7 +16,8 @@ type Props = {
   errors: any;
   msgError?: string;
   validation?: (value: any) => any;
-  width?: 'lg' | 'md' | 'sm';
+  width?: 'lg' | 'md' | 'sm' | 'xl';
+  title?: string;
 };
 
 type InputProps = React.HTMLProps<HTMLInputElement> & Props;
@@ -30,13 +31,15 @@ const Input = ({
   type,
   validation,
   width = 'lg',
+  title = '',
   ...rest
 }: InputProps): JSX.Element => {
   const [passwordShown, setPasswordShown] = useState(false);
   const widths = {
-    lg: '250px',
+    lg: '270px',
     md: '150px',
     sm: '50px',
+    xl: '400px',
   };
 
   const toogleShowPassword = (): void => {
@@ -47,6 +50,7 @@ const Input = ({
     return (
       <>
         <S.ContainerPassword hasError={!!errors[label]} width={widths[width]}>
+          <S.ContainerLabel htmlFor={label}>{title}</S.ContainerLabel>
           <input
             type={passwordShown ? 'text' : type}
             {...register(label, { required: required && msgError ? msgError : false, validate: validation })}
@@ -60,8 +64,10 @@ const Input = ({
       </>
     );
   }
+
   return (
     <S.Container hasError={!!errors[label]} width={widths[width]}>
+      <S.ContainerLabel htmlFor={label}>{title}</S.ContainerLabel>
       <input
         type={type}
         {...register(label, { required: required && msgError ? msgError : false, validate: validation })}

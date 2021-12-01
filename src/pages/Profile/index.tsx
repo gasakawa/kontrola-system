@@ -5,6 +5,7 @@ import { UserProfile } from 'types';
 import api from 'services/api';
 import ProfileInfo from 'components/ProfileInfo';
 import UserPlan from 'components/UserPlan';
+import UserData from 'components/UserData';
 import * as S from './styles';
 
 const Profile = (): JSX.Element => {
@@ -24,8 +25,19 @@ const Profile = (): JSX.Element => {
 
   return (
     <S.Wrapper>
-      <ProfileInfo user={userProfile} />
-      {userProfile.plan && <UserPlan name={userProfile.plan.name} nextPaymentDate={userProfile.plan.nextPaymentDate} />}
+      <S.Header>
+        <ProfileInfo user={userProfile} />
+        {userProfile.plan && (
+          <UserPlan
+            name={userProfile.plan.name}
+            nextPaymentDate={userProfile.plan.nextPaymentDate}
+            value={new Intl.NumberFormat('es', { style: 'currency', currencyDisplay: 'code', currency: 'COP' }).format(
+              Number(userProfile.plan.value),
+            )}
+          />
+        )}
+      </S.Header>
+      <UserData user={userProfile} />
     </S.Wrapper>
   );
 };

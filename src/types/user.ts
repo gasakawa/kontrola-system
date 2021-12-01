@@ -12,5 +12,9 @@ export type UserProfile = {
     lastPaymentDate: string;
     nextPaymentDate: string;
     name: string;
+    value: string;
   };
+  givenName: string;
+  familyName: string;
+  id: string;
 };

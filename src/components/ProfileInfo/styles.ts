@@ -16,8 +16,8 @@ export const Photo = styled.div`
   align-items: center;
 
   img {
-    height: 90px;
-    width: 90px;
+    height: 120px;
+    width: 120px;
   }
 `;
 

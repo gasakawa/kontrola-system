@@ -8,7 +8,8 @@ interface ContainerProps {
 export const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  margin-right: 1rem;
 
   &:disabled {
     padding: 10px;
@@ -37,6 +38,7 @@ export const ContainerPassword = styled.div<ContainerProps>`
   align-items: center;
   justify-content: center;
   position: relative;
+  margin-right: 1rem;
 
   svg {
     position: absolute;
@@ -68,4 +70,10 @@ export const ContainerPassword = styled.div<ContainerProps>`
   }
 `;
 
-export const ContentInputPassword = styled.input``;
+export const ContainerLabel = styled.label`
+  display: flex;
+  justify-content: flex-start;
+  font-size: var(--font-text-size-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+`;
