@@ -6,6 +6,7 @@ import api from 'services/api';
 import ProfileInfo from 'components/ProfileInfo';
 import UserPlan from 'components/UserPlan';
 import UserData from 'components/UserData';
+import ChangePassword from 'components/ChangePassword';
 import * as S from './styles';
 
 const Profile = (): JSX.Element => {
@@ -38,6 +39,7 @@ const Profile = (): JSX.Element => {
         )}
       </S.Header>
       <UserData user={userProfile} />
+      <ChangePassword />
     </S.Wrapper>
   );
 };

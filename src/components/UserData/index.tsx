@@ -74,21 +74,8 @@ const UserData = ({ user }: ProfileInfoProps): JSX.Element => {
   return (
     <S.Wrapper>
       {isSubmitting && <Loader />}
+      <h2>Perfil</h2>
       <S.FormContainer onSubmit={handleSubmit(onSubmit)}>
-        <S.ButtonsContainer>
-          <Button
-            onClick={() => {
-              setEnabled(true);
-            }}
-            disabled={enabled}
-          >
-            Editar
-          </Button>
-
-          <Button disabled={!enabled} type="submit">
-            Salvar
-          </Button>
-        </S.ButtonsContainer>
         <S.FormRow>
           <Input
             type="text"
@@ -149,6 +136,20 @@ const UserData = ({ user }: ProfileInfoProps): JSX.Element => {
             width="xl"
           />
         </S.FormRow>
+        <S.ButtonsContainer>
+          <Button
+            onClick={() => {
+              setEnabled(true);
+            }}
+            disabled={enabled}
+          >
+            Editar
+          </Button>
+
+          <Button disabled={!enabled} type="submit">
+            Salvar
+          </Button>
+        </S.ButtonsContainer>
       </S.FormContainer>
     </S.Wrapper>
   );

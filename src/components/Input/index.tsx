@@ -50,7 +50,6 @@ const Input = ({
     return (
       <>
         <S.ContainerPassword hasError={!!errors[label]} width={widths[width]}>
-          <S.ContainerLabel htmlFor={label}>{title}</S.ContainerLabel>
           <input
             type={passwordShown ? 'text' : type}
             {...register(label, { required: required && msgError ? msgError : false, validate: validation })}

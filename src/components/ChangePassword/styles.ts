@@ -16,6 +16,21 @@ export const Wrapper = styled.div`
   }
 `;
 
+export const FormContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+`;
+
+export const FormRow = styled.div`
+  display: flex;
+`;
+
+export const FormItem = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const ButtonsContainer = styled.div`
   display: flex;
   width: 200px;
@@ -23,16 +38,4 @@ export const ButtonsContainer = styled.div`
   button {
     margin-right: 1rem;
   }
-`;
-
-export const FormContainer = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: 1rem;
-`;
-
-export const FormRow = styled.div`
-  display: flex;
-  margin-top: 1rem;
 `;

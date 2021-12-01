@@ -11,10 +11,6 @@ export const Container = styled.div<ContainerProps>`
   align-items: flex-start;
   margin-right: 1rem;
 
-  &:disabled {
-    padding: 10px;
-  }
-
   input {
     height: 40px;
     width: ${props => props.width};
@@ -30,6 +26,12 @@ export const Container = styled.div<ContainerProps>`
       css`
         border-color: #c53030;
       `}
+
+    &:disabled {
+      padding: 10px;
+      background-color: rgba(1, 103, 149, 0.2);
+      color: var(--color-secondary);
+    }
   }
 `;
 
