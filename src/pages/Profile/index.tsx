@@ -31,6 +31,7 @@ const Profile = (): JSX.Element => {
         {userProfile.plan && (
           <UserPlan
             name={userProfile.plan.name}
+            dateISO={userProfile.plan.dateISO}
             nextPaymentDate={userProfile.plan.nextPaymentDate}
             value={new Intl.NumberFormat('es', { style: 'currency', currencyDisplay: 'code', currency: 'COP' }).format(
               Number(userProfile.plan.value),

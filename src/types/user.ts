@@ -13,6 +13,7 @@ export type UserProfile = {
     nextPaymentDate: string;
     name: string;
     value: string;
+    dateISO: string;
   };
   givenName: string;
   familyName: string;

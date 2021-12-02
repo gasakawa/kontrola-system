@@ -1,4 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+type UserPlanProps = {
+  overdue: boolean;
+};
 
 export const Wrapper = styled.div`
   display: flex;
@@ -25,13 +29,21 @@ export const PlanTitle = styled.p`
   font-weight: 600;
 `;
 
-export const PlanDue = styled.div`
+export const PlanDue = styled.div<UserPlanProps>`
   display: flex;
 
   p {
     position: relative;
-    background: #f0f0f0;
-    color: #82868b;
+    ${props =>
+      props.overdue
+        ? css`
+            background: rgba(197, 1, 49, 0.7);
+            color: #fff;
+          `
+        : css`
+            background: #f0f0f0;
+            color: #82868b;
+          `}
     white-space: nowrap;
     font-size: 0.8rem;
     padding: 0.3rem 0.5rem;
