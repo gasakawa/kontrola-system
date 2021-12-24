@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from 'hooks/auth';
-import { FiUser } from 'react-icons/fi';
 import api from 'services/api';
+import profileLogo from 'assets/profile.svg';
 import * as S from './styles';
 
 type CompanyProfile = {
@@ -38,7 +38,7 @@ const Header = (): JSX.Element => {
           {user.data.profilePicUrl.length > 0 ? (
             <img src={user.data.profilePicUrl} alt={user.data.name} />
           ) : (
-            <FiUser size={32} />
+            <img src={profileLogo} alt="Avatar del usuario" />
           )}
         </S.ContentAvatar>
       </S.Content>

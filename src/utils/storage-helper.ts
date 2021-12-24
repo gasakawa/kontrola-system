@@ -17,3 +17,13 @@ export const getUser = (): UserInfo | null => {
 
   return null;
 };
+
+export const updateUserAvatar = (picUrl: string): void => {
+  const userSaved = localStorage.getItem('@Kontrola:user');
+  if (userSaved) {
+    const user = JSON.parse(userSaved);
+    user.data.profilePicUrl = picUrl;
+
+    localStorage.setItem('@Kontrola:user', JSON.stringify(user));
+  }
+};

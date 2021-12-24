@@ -22,7 +22,7 @@ type EditProfileFormData = {
   phone: string;
 };
 
-const UserData = ({ user }: ProfileInfoProps): JSX.Element => {
+const UserData = ({ user: { user } }: ProfileInfoProps): JSX.Element => {
   const [enabled, setEnabled] = useState(false);
   const {
     handleSubmit,

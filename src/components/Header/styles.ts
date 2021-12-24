@@ -60,9 +60,6 @@ export const ContentAvatar = styled.div`
     border-radius: 50%;
     height: 56px;
     width: 56px;
-  }
-
-  svg {
     color: rgba(0, 0, 0, 25%);
   }
 `;

@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
   background: #fff;
   right: 0;
   padding: 1rem;
+  margin-left: 1rem;
   box-shadow: var(--box-shadow);
   border-radius: 10px;
   border: 1px solid var(--color-primary);

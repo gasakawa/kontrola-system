@@ -11,6 +11,7 @@ import ResetPassword from 'pages/ResetPassword';
 import Layout from 'components/Layout';
 import Profile from 'pages/Profile';
 import ChangePassword from 'components/ChangePassword';
+import AdminClients from 'pages/AdminClients';
 import Route from './route';
 
 const Routes = (): JSX.Element => {
@@ -25,6 +26,7 @@ const Routes = (): JSX.Element => {
           <Route component={ResetPassword} path="/reset-password" />
           <Route component={Profile} path="/me/profile" isPrivate />
           <Route component={ChangePassword} path="/me/change-password" isPrivate />
+          <Route component={AdminClients} path="/customer/admin" isPrivate />
         </Switch>
       </Layout>
     </>

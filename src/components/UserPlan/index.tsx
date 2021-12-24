@@ -1,5 +1,4 @@
-import { compareAsc, parseISO } from 'date-fns';
-import React, { useState } from 'react';
+import React from 'react';
 
 import * as S from './styles';
 
@@ -7,15 +6,10 @@ type UserPlanProps = {
   name: string;
   nextPaymentDate: string;
   value: string;
-  dateISO: string;
+  overdue: boolean;
 };
 
-const UserPlan = ({ name, nextPaymentDate, value, dateISO }: UserPlanProps): JSX.Element => {
-  const [overdue] = useState(() => {
-    const over = compareAsc(parseISO(dateISO), new Date());
-    return over !== 1;
-  });
-
+const UserPlan = ({ name, nextPaymentDate, value, overdue }: UserPlanProps): JSX.Element => {
   return (
     <S.Wrapper>
       <S.PlanHeader>

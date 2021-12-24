@@ -1,4 +1,4 @@
-export type UserProfile = {
+export type User = {
   email: string;
   name: string;
   address: string;
@@ -8,14 +8,18 @@ export type UserProfile = {
   gender: string;
   headquarter: string;
   profilePic: string;
+  givenName: string;
+  familyName: string;
+  id: string;
+};
+
+export type UserProfile = {
+  user: User;
   plan: {
     lastPaymentDate: string;
     nextPaymentDate: string;
     name: string;
     value: string;
-    dateISO: string;
+    overdue: boolean;
   };
-  givenName: string;
-  familyName: string;
-  id: string;
 };
