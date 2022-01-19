@@ -15,6 +15,16 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   error => {
+    if (!error.response) {
+      window.location.href = '/';
+      localStorage.removeItem('@Kontrola:token');
+      localStorage.removeItem('@Kontrola:user');
+      if (axiosInstance.defaults.headers) {
+        delete axiosInstance.defaults.headers['x-access-token'];
+        delete axiosInstance.defaults.headers['x-session-id'];
+      }
+      return Promise.reject(error);
+    }
     const { url } = error.response.config;
     const { status } = error.response;
     if (status === 401) {

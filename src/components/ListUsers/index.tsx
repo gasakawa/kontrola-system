@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import MaterialTable from 'material-table';
-
-import Table from 'components/Table';
 
 import api from 'services/api';
+
+import Table from 'components/Table';
 import * as S from './styles';
 
 type UserRecords = {
@@ -26,11 +25,6 @@ type UserRecords = {
   ];
 };
 
-type Order = {
-  orderColumnId: number;
-  orderDirection: string;
-};
-
 type ListUsersProps = {
   company: string;
   roleId: number;
@@ -41,126 +35,61 @@ type FilterData = {
   value: string;
 };
 
-type FilterColumn = {
-  [key: string]: string;
-};
-
 const columns = [
-  { field: 'givenName', title: 'Nombres' },
-  { field: 'familyName', title: 'Apellidos' },
-  { field: 'documentId', title: 'Documento' },
-  { field: 'email', title: 'E-mail', filtering: false },
-  { field: 'status', title: 'Status', filtering: false },
+  { field: 'givenName', headerName: 'Nombres', sortable: true, dbField: 'given_name' },
+  { field: 'familyName', headerName: 'Apellidos', sortable: true, dbField: 'family_name' },
+  { field: 'documentId', headerName: 'Documento', sortable: true, dbField: 'document_id' },
+  { field: 'email', headerName: 'E-mail', sortable: true, dbField: 'email' },
+  { field: 'plan', headerName: 'Plan', sortable: false, dbField: 'plan' },
+  { field: 'status', headerName: 'Status', sortable: true, dbField: 'status' },
 ];
-
-const orderColumns = ['given_name', 'family_name', 'document_id', 'email', 'status'];
-const filterColumns = { givenName: 'given_name', familyName: 'family_name', documentId: 'document_id' } as FilterColumn;
 
 const ListUsers = ({ company, roleId }: ListUsersProps): JSX.Element => {
   const [userList, setUserList] = useState<UserRecords | null>();
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageSize, setCurrentPageSize] = useState(10);
-  const [order, setOrder] = useState<Order>(() => {
-    return { orderColumnId: 0, orderDirection: 'asc' };
-  });
+  const [direction, setDirection] = useState('asc');
+  const [orderBy, setOrderBy] = useState('given_name');
   const [filterQuery, setFilterQuery] = useState<FilterData>(() => {
     return { field: '', value: 'null' };
   });
 
   useEffect(() => {
     const loadUsers = async (): Promise<void> => {
-      const orderBy = orderColumns[order.orderColumnId];
       const response = await api({
         method: 'GET',
-        url: `/user/list/${company}?roleId=${roleId}&page=${currentPage}&records=${currentPageSize}&orderField=${orderBy}&orderDirection=${order.orderDirection.toLocaleUpperCase()}&queryField=${
+        url: `/user/list/${company}?roleId=${roleId}&page=${currentPage}&records=${currentPageSize}&orderField=${orderBy}&orderDirection=${direction.toLocaleUpperCase()}&queryField=${
           filterQuery.field
         }:${filterQuery.value}`,
       });
       setUserList(response.data);
     };
     loadUsers();
-  }, [
-    company,
-    roleId,
-    currentPage,
-    currentPageSize,
-    order.orderDirection,
-    order.orderColumnId,
-    filterQuery.value,
-    filterQuery.field,
-  ]);
+  }, [company, roleId, currentPage, currentPageSize, direction, orderBy, filterQuery.value, filterQuery.field]);
 
   return (
     <S.Wrapper>
       <S.UserList>
         {userList?.users && (
-          <>
-            {/* <Table columns={columns} rows={userList.users} /> */}
-            <MaterialTable
-              title="Clientes"
-              columns={columns}
-              style={{
-                width: '100%',
-              }}
-              options={{
-                debounceInterval: 700,
-                padding: 'dense',
-                filtering: true,
-                headerStyle: {
-                  backgroundColor: '#016795',
-                  color: '#fff',
-                  fontFamily: 'Montserrat',
-                },
-                search: false,
-                pageSizeOptions: [10, 25, 50],
-              }}
-              data={userList.users}
-              onChangePage={page => setCurrentPage(page + 1)}
-              onChangeRowsPerPage={pageSize => setCurrentPageSize(pageSize)}
-              onOrderChange={(orderColumnId, orderDirection) => setOrder({ orderColumnId, orderDirection })}
-              onFilterChange={filter => {
-                const [dataFilter] = filter;
-
-                if (dataFilter) {
-                  if (dataFilter.column.field) {
-                    setFilterQuery({
-                      field: filterColumns[dataFilter.column.field] || '',
-                      value: dataFilter.value,
-                    });
-                  }
-                }
-              }}
-              localization={{
-                pagination: {
-                  labelDisplayedRows: '{from} - {to} de {count}',
-                  labelRowsSelect: 'Registros',
-                  firstTooltip: 'Primeira página',
-                  previousTooltip: 'Anterior',
-                  lastTooltip: 'Última página',
-                  nextTooltip: 'Próxima',
-                },
-                toolbar: {
-                  nRowsSelected: '{0} linha(s) selecionadas',
-                  searchTooltip: 'Buscar',
-                  searchPlaceholder: 'Buscar',
-                },
-                header: {
-                  actions: 'Ações',
-                },
-                body: {
-                  emptyDataSourceMessage: 'Não hay registros',
-                  filterRow: {
-                    filterTooltip: 'Filtro',
-                  },
-                  editRow: {
-                    saveTooltip: 'Salvar',
-                    cancelTooltip: 'Cancelar',
-                  },
-                  editTooltip: 'Editar',
-                },
-              }}
-            />
-          </>
+          <Table
+            columns={columns}
+            rows={userList.users}
+            total={userList.totalUsers}
+            currentPageSize={currentPageSize}
+            currentPage={currentPage}
+            direction={direction}
+            onRowsPerPageChange={pagesPerPage => {
+              setCurrentPage(1);
+              setCurrentPageSize(pagesPerPage);
+            }}
+            onPageChange={page => {
+              setCurrentPage(page);
+            }}
+            onOrderChange={(field, order) => {
+              setDirection(order);
+              setOrderBy(field);
+            }}
+          />
         )}
       </S.UserList>
     </S.Wrapper>
