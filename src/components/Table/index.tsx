@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
+import { tablePaginationClasses } from '@mui/material/TablePagination';
 import {
   TableContainer,
   Paper,
@@ -10,11 +11,11 @@ import {
   TableCell,
   TableBody,
   TablePagination,
-  TableFooter,
 } from '@mui/material';
 
 import TableOrderColumn from 'components/TableOrderColumn';
 import { Column } from 'types/table';
+import * as S from './styles';
 
 type TableProps = {
   columns: Column[];
@@ -64,6 +65,36 @@ const Table = ({
     },
   }));
 
+  const StyledTablePagination = styled(TablePagination)(
+    () => `
+    & .MuiTablePagination-selectLabel {
+      font-size: 0.887rem;
+      font-family: Montserrat;
+      color: #266795;
+    }
+
+    & .MuiTablePagination-select {
+        font-size: 0.887rem;
+        font-family: Montserrat;
+        color: #266795;
+
+     }
+
+    & .MuiTablePagination-displayedRows {
+        font-size: 0.887rem;
+        font-family: Montserrat;
+        color: #266795;
+
+    }
+    & .MuiTablePagination-input {
+        font-size: 0.887rem;
+        font-family: Montserrat;
+        color: #266795;
+
+    }
+  `,
+  );
+
   const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const pagesPerPage = Number(event.target.value);
     onRowsPerPageChange(pagesPerPage);
@@ -78,63 +109,57 @@ const Table = ({
   };
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer>
-        <MTable stickyHeader>
-          <TableHead>
-            <TableRow>
-              {columns.map(col => (
-                <StyledTableCell key={col.field}>
-                  {col.sortable ? (
-                    <TableOrderColumn
-                      title={col.headerName}
-                      order={direction}
-                      changeOrder={order => handleOrderChange(col.dbField, order)}
-                    />
-                  ) : (
-                    col.headerName
-                  )}
-                </StyledTableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(row => (
-              <StyledTableRow key={row.id}>
-                {columns.filter(col => {
-                  const keys = Object.keys(row);
-                  if (keys.includes(col.field)) {
+    <S.Wrapper>
+      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+        <TableContainer>
+          <MTable stickyHeader>
+            <TableHead>
+              <TableRow>
+                {columns.map(col => (
+                  <StyledTableCell key={col.field}>
+                    {col.sortable ? (
+                      <TableOrderColumn
+                        title={col.headerName}
+                        order={direction}
+                        changeOrder={order => handleOrderChange(col.dbField, order)}
+                      />
+                    ) : (
+                      col.headerName
+                    )}
+                  </StyledTableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map(row => (
+                <StyledTableRow key={row.id}>
+                  {columns.map(col => {
                     return (
                       <StyledTableCell align="left" key={row.id}>
                         {row[col.field]}
                       </StyledTableCell>
                     );
-                  }
-                })}
-              </StyledTableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[10, 25, 50]}
-                colSpan={3}
-                count={total}
-                rowsPerPage={currentPageSize}
-                page={currentPage - 1}
-                labelRowsPerPage="Registros por página"
-                onPageChange={handlePageChange}
-                onRowsPerPageChange={handleRowsPerPageChange}
-                align="left"
-                labelDisplayedRows={({ from, to, count }) => {
-                  return `${from} a ${to} de ${count}`;
-                }}
-              />
-            </TableRow>
-          </TableFooter>
-        </MTable>
-      </TableContainer>
-    </Paper>
+                  })}
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </MTable>
+        </TableContainer>
+        <StyledTablePagination
+          rowsPerPageOptions={[10, 25, 50]}
+          colSpan={3}
+          count={total}
+          rowsPerPage={currentPageSize}
+          page={currentPage - 1}
+          labelRowsPerPage="Registros por página"
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
+          labelDisplayedRows={({ from, to, count }) => {
+            return `${from} a ${to} de ${count}`;
+          }}
+        />
+      </Paper>
+    </S.Wrapper>
   );
 };
 

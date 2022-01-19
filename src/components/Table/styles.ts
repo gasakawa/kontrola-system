@@ -12,3 +12,8 @@ export const Row = styled.div`
   font-weight: 600;
   width: 100%;
 `;
+
+export const Pagination = styled.div`
+  display: flex;
+  align-items: center;
+`;
