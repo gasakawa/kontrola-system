@@ -3,4 +3,5 @@ export type Column = {
   headerName: string;
   sortable: boolean;
   dbField: string;
+  searchable: boolean;
 };

@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
-import { tablePaginationClasses } from '@mui/material/TablePagination';
 import {
   TableContainer,
   Paper,
@@ -11,13 +10,17 @@ import {
   TableCell,
   TableBody,
   TablePagination,
+  TableFooter,
 } from '@mui/material';
+
+import { FaUserEdit, FaUserAltSlash } from 'react-icons/fa';
+import { FiSearch } from 'react-icons/fi';
 
 import TableOrderColumn from 'components/TableOrderColumn';
 import { Column } from 'types/table';
 import * as S from './styles';
 
-type TableProps = {
+interface TableProps {
   columns: Column[];
   rows: {
     [x: string]: any;
@@ -29,7 +32,10 @@ type TableProps = {
   onRowsPerPageChange: (pagesPerPage: number) => void;
   onPageChange: (page: number) => void;
   onOrderChange: (field: string, direction: string) => void;
-};
+  onEditRow: (id: string) => void;
+  onDeleteRow: (id: string) => void;
+  onSearch: (field: string, value: string) => void;
+}
 
 const Table = ({
   columns,
@@ -41,7 +47,13 @@ const Table = ({
   onRowsPerPageChange,
   onPageChange,
   onOrderChange,
+  onEditRow,
+  onDeleteRow,
+  onSearch,
 }: TableProps): JSX.Element => {
+  const [searchField, setSearchField] = useState('');
+  const searchTextRef = useRef<HTMLInputElement>(null);
+
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: '#266795',
@@ -108,9 +120,43 @@ const Table = ({
     onOrderChange(field, order);
   };
 
+  const handleSearch = (field: string, value: string): void => {
+    onSearch(field, value);
+  };
+
   return (
     <S.Wrapper>
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+        <S.SearchContainer>
+          {columns.map(col => (
+            <S.SearchType key={col.field}>
+              {col.searchable && (
+                <>
+                  <input
+                    type="radio"
+                    name="searchType"
+                    id={col.dbField}
+                    value={col.headerName}
+                    onClick={() => {
+                      setSearchField(col.dbField);
+                    }}
+                  />
+                  <label htmlFor={col.dbField}>{col.headerName}</label>
+                </>
+              )}
+            </S.SearchType>
+          ))}
+          <S.InputSearch>
+            <input type="text" ref={searchTextRef} />
+            <FiSearch
+              onClick={() => {
+                if (searchTextRef.current) {
+                  handleSearch(searchField, searchTextRef.current.value);
+                }
+              }}
+            />
+          </S.InputSearch>
+        </S.SearchContainer>
         <TableContainer>
           <MTable stickyHeader>
             <TableHead>
@@ -128,6 +174,7 @@ const Table = ({
                     )}
                   </StyledTableCell>
                 ))}
+                <StyledTableCell>Acciones</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -135,29 +182,39 @@ const Table = ({
                 <StyledTableRow key={row.id}>
                   {columns.map(col => {
                     return (
-                      <StyledTableCell align="left" key={row.id}>
+                      <StyledTableCell align="left" key={`${row.id}-${col.field}`}>
                         {row[col.field]}
                       </StyledTableCell>
                     );
                   })}
+                  <StyledTableCell>
+                    <S.Actions>
+                      <FaUserEdit size={16} title="Editar" onClick={() => onEditRow(row.id)} />
+                      <FaUserAltSlash size={16} color="#ed1515" title="Eliminar" onClick={() => onDeleteRow(row.id)} />
+                    </S.Actions>
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <StyledTablePagination
+                  rowsPerPageOptions={[10, 25, 50]}
+                  colSpan={3}
+                  count={total}
+                  rowsPerPage={currentPageSize}
+                  page={currentPage - 1}
+                  labelRowsPerPage="Registros por página"
+                  onPageChange={handlePageChange}
+                  onRowsPerPageChange={handleRowsPerPageChange}
+                  labelDisplayedRows={({ from, to, count }) => {
+                    return `${from} a ${to} de ${count}`;
+                  }}
+                />
+              </TableRow>
+            </TableFooter>
           </MTable>
         </TableContainer>
-        <StyledTablePagination
-          rowsPerPageOptions={[10, 25, 50]}
-          colSpan={3}
-          count={total}
-          rowsPerPage={currentPageSize}
-          page={currentPage - 1}
-          labelRowsPerPage="Registros por página"
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleRowsPerPageChange}
-          labelDisplayedRows={({ from, to, count }) => {
-            return `${from} a ${to} de ${count}`;
-          }}
-        />
       </Paper>
     </S.Wrapper>
   );
