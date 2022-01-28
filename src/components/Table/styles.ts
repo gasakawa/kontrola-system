@@ -34,26 +34,9 @@ export const Actions = styled.div`
 
 export const SearchContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: baseline;
   margin-bottom: 20px;
   justify-content: flex-end;
-`;
-
-export const SearchType = styled.div`
-  display: flex;
-  align-items: center;
-
-  label {
-    color: var(--color-primary);
-    font-family: Montserrat;
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-left: 0.3rem;
-  }
-
-  input {
-    margin-left: 0.3rem;
-  }
 `;
 
 export const InputSearch = styled.div`
@@ -63,7 +46,7 @@ export const InputSearch = styled.div`
   position: relative;
 
   input {
-    height: 30px;
+    height: 40px;
     border-radius: 8px;
     border: 1px solid var(--color-primary);
     font-family: 'Montserrat';
@@ -86,4 +69,8 @@ export const NoRecordsWrapper = styled.div`
   padding: 15px;
   font-size: 0.9rem;
   font-weight: 500;
+`;
+
+export const ButtonsContainer = styled.div`
+  display: flex;
 `;

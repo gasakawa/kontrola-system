@@ -4,6 +4,7 @@ import api from 'services/api';
 
 import Table from 'components/Table';
 import { Column } from 'types/table';
+import AddUserModal from 'components/AddUserModal';
 import * as S from './styles';
 
 type UserRecords = {
@@ -34,7 +35,7 @@ const columns = [
   { field: 'documentId', headerName: 'Documento', sortable: false, dbField: 'document_id', searchable: false },
   { field: 'email', headerName: 'E-mail', sortable: false, dbField: 'email', searchable: false },
   { field: 'plan', headerName: 'Plan', sortable: false, dbField: 'plan', searchable: false },
-  { field: 'status', headerName: 'Status', sortable: true, dbField: 'status', searchable: false },
+  { field: 'status', headerName: 'Status', sortable: false, dbField: 'status', searchable: false },
 ] as Column[];
 
 const ListUsers = ({ company, roleId }: ListUsersProps): JSX.Element => {
@@ -43,6 +44,7 @@ const ListUsers = ({ company, roleId }: ListUsersProps): JSX.Element => {
   const [currentPageSize, setCurrentPageSize] = useState(10);
   const [direction, setDirection] = useState('asc');
   const [filterQuery, setFilterQuery] = useState('');
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
 
   useEffect(() => {
     const loadUsers = async (): Promise<void> => {
@@ -56,33 +58,45 @@ const ListUsers = ({ company, roleId }: ListUsersProps): JSX.Element => {
   }, [company, roleId, currentPage, currentPageSize, direction, filterQuery]);
 
   return (
-    <S.Wrapper>
-      <S.UserList>
-        {!!userList && (
-          <Table
-            columns={columns}
-            rows={userList.users ? userList.users : []}
-            total={userList.totalRecords}
-            currentPageSize={currentPageSize}
-            currentPage={currentPage}
-            direction={direction}
-            onRowsPerPageChange={pagesPerPage => {
-              setCurrentPage(1);
-              setCurrentPageSize(pagesPerPage);
-            }}
-            onPageChange={page => {
-              setCurrentPage(page);
-            }}
-            onOrderChange={(field, order) => {
-              setDirection(order);
-            }}
-            onDeleteRow={id => console.log(id)}
-            onEditRow={id => console.log(id)}
-            onSearch={value => setFilterQuery(value)}
-          />
-        )}
-      </S.UserList>
-    </S.Wrapper>
+    <>
+      <S.Wrapper>
+        <S.UserList>
+          {!!userList && (
+            <Table
+              columns={columns}
+              rows={userList.users ? userList.users : []}
+              total={userList.totalRecords}
+              currentPageSize={currentPageSize}
+              currentPage={currentPage}
+              direction={direction}
+              onRowsPerPageChange={pagesPerPage => {
+                setCurrentPage(1);
+                setCurrentPageSize(pagesPerPage);
+              }}
+              onPageChange={page => {
+                setCurrentPage(page);
+              }}
+              onOrderChange={(field, order) => {
+                setDirection(order);
+              }}
+              onDeleteRow={id => console.log(id)}
+              onEditRow={id => console.log(id)}
+              onSearch={value => setFilterQuery(value)}
+              buttonAddRecord={{
+                label: 'Adicionar cliente',
+                show: true,
+                enabled: !!userList.allowAddNewUser,
+                width: '200px',
+                onClick: () => {
+                  setShowAddUserModal(!showAddUserModal);
+                },
+              }}
+            />
+          )}
+        </S.UserList>
+      </S.Wrapper>
+      {showAddUserModal && <AddUserModal />}
+    </>
   );
 };
 

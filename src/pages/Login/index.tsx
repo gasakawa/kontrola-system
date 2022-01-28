@@ -32,7 +32,7 @@ const Login = (): JSX.Element => {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm<SigninFormData>();
+  } = useForm();
 
   const { signIn } = useAuth();
   const history = useHistory();

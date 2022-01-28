@@ -18,7 +18,16 @@ import { FiSearch } from 'react-icons/fi';
 
 import TableOrderColumn from 'components/TableOrderColumn';
 import { Column } from 'types/table';
+import Button from 'components/Button';
 import * as S from './styles';
+
+type ButtonTable = {
+  enabled: boolean;
+  label: string;
+  show: boolean;
+  width: string;
+  onClick: () => void;
+};
 
 interface TableProps {
   columns: Column[];
@@ -35,6 +44,7 @@ interface TableProps {
   onEditRow: (id: string) => void;
   onDeleteRow: (id: string) => void;
   onSearch: (value: string) => void;
+  buttonAddRecord: ButtonTable;
 }
 
 const Table = ({
@@ -44,6 +54,7 @@ const Table = ({
   currentPageSize,
   currentPage,
   direction,
+  buttonAddRecord,
   onRowsPerPageChange,
   onPageChange,
   onOrderChange,
@@ -134,6 +145,19 @@ const Table = ({
             />
             <FiSearch />
           </S.InputSearch>
+          {buttonAddRecord.show && (
+            <S.ButtonsContainer>
+              <Button
+                type="button"
+                style={{ width: buttonAddRecord.width }}
+                onClick={() => {
+                  buttonAddRecord.onClick();
+                }}
+              >
+                {buttonAddRecord.label}
+              </Button>
+            </S.ButtonsContainer>
+          )}
         </S.SearchContainer>
         <TableContainer>
           <MTable stickyHeader>
