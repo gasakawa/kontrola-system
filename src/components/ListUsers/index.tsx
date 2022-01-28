@@ -16,8 +16,6 @@ type UserRecords = {
   users: [
     {
       id: string;
-      givenName: string;
-      familyName: string;
       documentId: string;
       email: string;
       status: string;
@@ -31,16 +29,10 @@ type ListUsersProps = {
   roleId: number;
 };
 
-type FilterData = {
-  field: string;
-  value: string;
-};
-
 const columns = [
-  { field: 'givenName', headerName: 'Nombres', sortable: true, dbField: 'given_name', searchable: true },
-  { field: 'familyName', headerName: 'Apellidos', sortable: true, dbField: 'family_name', searchable: true },
-  { field: 'documentId', headerName: 'Documento', sortable: true, dbField: 'document_id', searchable: true },
-  { field: 'email', headerName: 'E-mail', sortable: true, dbField: 'email', searchable: true },
+  { field: 'fullName', headerName: 'Nombre', sortable: true, dbField: 'given_name', searchable: true },
+  { field: 'documentId', headerName: 'Documento', sortable: false, dbField: 'document_id', searchable: false },
+  { field: 'email', headerName: 'E-mail', sortable: false, dbField: 'email', searchable: false },
   { field: 'plan', headerName: 'Plan', sortable: false, dbField: 'plan', searchable: false },
   { field: 'status', headerName: 'Status', sortable: true, dbField: 'status', searchable: false },
 ] as Column[];
@@ -50,57 +42,44 @@ const ListUsers = ({ company, roleId }: ListUsersProps): JSX.Element => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageSize, setCurrentPageSize] = useState(10);
   const [direction, setDirection] = useState('asc');
-  const [orderBy, setOrderBy] = useState('given_name');
-  const [filterQuery, setFilterQuery] = useState<FilterData>(() => {
-    return { field: '', value: '' };
-  });
+  const [filterQuery, setFilterQuery] = useState('');
 
   useEffect(() => {
     const loadUsers = async (): Promise<void> => {
-      const response = await api({
-        method: 'GET',
-        url: `/user/list/${company}?roleId=${roleId}&page=${currentPage}&records=${currentPageSize}&orderField=${orderBy}&orderDirection=${direction.toLocaleUpperCase()}&queryField=${
-          filterQuery.field
-        }:${filterQuery.value}`,
-      });
+      const response = await api.get<UserRecords>(
+        `/user/list/${company}?roleId=${roleId}&page=${currentPage}&records=${currentPageSize}&orderDirection=${direction.toLocaleUpperCase()}&queryField=${filterQuery}`,
+      );
+
       setUserList(response.data);
     };
     loadUsers();
-  }, [company, roleId, currentPage, currentPageSize, direction, orderBy, filterQuery.value, filterQuery.field]);
+  }, [company, roleId, currentPage, currentPageSize, direction, filterQuery]);
 
   return (
     <S.Wrapper>
       <S.UserList>
-        {userList?.users && (
-          <>
-            <Table
-              columns={columns}
-              rows={userList.users}
-              total={userList.totalUsers}
-              currentPageSize={currentPageSize}
-              currentPage={currentPage}
-              direction={direction}
-              onRowsPerPageChange={pagesPerPage => {
-                setCurrentPage(1);
-                setCurrentPageSize(pagesPerPage);
-              }}
-              onPageChange={page => {
-                setCurrentPage(page);
-              }}
-              onOrderChange={(field, order) => {
-                setDirection(order);
-                setOrderBy(field);
-              }}
-              onDeleteRow={id => console.log(id)}
-              onEditRow={id => console.log(id)}
-              onSearch={(field, value) =>
-                setFilterQuery({
-                  field,
-                  value,
-                })
-              }
-            />
-          </>
+        {!!userList && (
+          <Table
+            columns={columns}
+            rows={userList.users ? userList.users : []}
+            total={userList.totalRecords}
+            currentPageSize={currentPageSize}
+            currentPage={currentPage}
+            direction={direction}
+            onRowsPerPageChange={pagesPerPage => {
+              setCurrentPage(1);
+              setCurrentPageSize(pagesPerPage);
+            }}
+            onPageChange={page => {
+              setCurrentPage(page);
+            }}
+            onOrderChange={(field, order) => {
+              setDirection(order);
+            }}
+            onDeleteRow={id => console.log(id)}
+            onEditRow={id => console.log(id)}
+            onSearch={value => setFilterQuery(value)}
+          />
         )}
       </S.UserList>
     </S.Wrapper>

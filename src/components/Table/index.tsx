@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
 import {
@@ -34,7 +34,7 @@ interface TableProps {
   onOrderChange: (field: string, direction: string) => void;
   onEditRow: (id: string) => void;
   onDeleteRow: (id: string) => void;
-  onSearch: (field: string, value: string) => void;
+  onSearch: (value: string) => void;
 }
 
 const Table = ({
@@ -51,9 +51,6 @@ const Table = ({
   onDeleteRow,
   onSearch,
 }: TableProps): JSX.Element => {
-  const [searchField, setSearchField] = useState('');
-  const searchTextRef = useRef<HTMLInputElement>(null);
-
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: '#266795',
@@ -120,41 +117,22 @@ const Table = ({
     onOrderChange(field, order);
   };
 
-  const handleSearch = (field: string, value: string): void => {
-    onSearch(field, value);
+  const handleSearch = (value: string): void => {
+    onSearch(value);
   };
 
   return (
     <S.Wrapper>
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <S.SearchContainer>
-          {columns.map(col => (
-            <S.SearchType key={col.field}>
-              {col.searchable && (
-                <>
-                  <input
-                    type="radio"
-                    name="searchType"
-                    id={col.dbField}
-                    value={col.headerName}
-                    onClick={() => {
-                      setSearchField(col.dbField);
-                    }}
-                  />
-                  <label htmlFor={col.dbField}>{col.headerName}</label>
-                </>
-              )}
-            </S.SearchType>
-          ))}
           <S.InputSearch>
-            <input type="text" ref={searchTextRef} />
-            <FiSearch
-              onClick={() => {
-                if (searchTextRef.current) {
-                  handleSearch(searchField, searchTextRef.current.value);
-                }
+            <input
+              type="text"
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                handleSearch(e.currentTarget.value);
               }}
             />
+            <FiSearch />
           </S.InputSearch>
         </S.SearchContainer>
         <TableContainer>
@@ -196,24 +174,27 @@ const Table = ({
                 </StyledTableRow>
               ))}
             </TableBody>
-            <TableFooter>
-              <TableRow>
-                <StyledTablePagination
-                  rowsPerPageOptions={[10, 25, 50]}
-                  colSpan={3}
-                  count={total}
-                  rowsPerPage={currentPageSize}
-                  page={currentPage - 1}
-                  labelRowsPerPage="Registros por página"
-                  onPageChange={handlePageChange}
-                  onRowsPerPageChange={handleRowsPerPageChange}
-                  labelDisplayedRows={({ from, to, count }) => {
-                    return `${from} a ${to} de ${count}`;
-                  }}
-                />
-              </TableRow>
-            </TableFooter>
+            {rows.length > 0 && (
+              <TableFooter>
+                <TableRow>
+                  <StyledTablePagination
+                    rowsPerPageOptions={[10, 25, 50]}
+                    colSpan={3}
+                    count={total}
+                    rowsPerPage={currentPageSize}
+                    page={currentPage - 1}
+                    labelRowsPerPage="Registros por página"
+                    onPageChange={handlePageChange}
+                    onRowsPerPageChange={handleRowsPerPageChange}
+                    labelDisplayedRows={({ from, to, count }) => {
+                      return `${from} a ${to} de ${count}`;
+                    }}
+                  />
+                </TableRow>
+              </TableFooter>
+            )}
           </MTable>
+          {rows.length === 0 && <S.NoRecordsWrapper>No se encontraron resultados</S.NoRecordsWrapper>}
         </TableContainer>
       </Paper>
     </S.Wrapper>

@@ -36,7 +36,7 @@ export const SearchContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  justify-content: flex-start;
+  justify-content: flex-end;
 `;
 
 export const SearchType = styled.div`
@@ -77,4 +77,13 @@ export const InputSearch = styled.div`
     color: var(--color-primary);
     cursor: pointer;
   }
+`;
+
+export const NoRecordsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  font-size: 0.9rem;
+  font-weight: 500;
 `;
