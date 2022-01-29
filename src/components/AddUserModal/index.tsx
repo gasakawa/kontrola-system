@@ -1,17 +1,111 @@
-import { useAuth } from 'hooks/auth';
 import React from 'react';
+import { useAuth } from 'hooks/auth';
 
+import Input from 'components/Input';
+import { useForm } from 'react-hook-form';
 import * as S from './styles';
 
-const AddUserModal = (): JSX.Element => {
+type AddUserModalProps = {
+  action: (action: string) => void;
+};
+
+const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
   const { user } = useAuth();
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  const handleClose = (): void => {
+    action('close');
+  };
+
   return (
     <S.Wrapper>
-      <div>
-        Add user
-        {user.data.company}
-      </div>
-      :
+      <S.Container>
+        <span onClick={handleClose} role="none">
+          &times;
+        </span>
+        <S.Content>
+          <S.Title>Adicionar cliente</S.Title>
+          <S.Form>
+            <S.FormRow>
+              <Input
+                type="name"
+                label="given_name"
+                register={register}
+                errors={errors}
+                msgError="Campo obligatorio"
+                title="Nombres"
+              />
+              <Input
+                type="name"
+                label="family_name"
+                register={register}
+                errors={errors}
+                msgError="Campo obligatorio"
+                title="Apellidos"
+              />
+            </S.FormRow>
+            <S.FormRow>
+              <Input
+                type="text"
+                label="birthday"
+                register={register}
+                errors={errors}
+                msgError="Campo obligatorio"
+                title="Fecha nascimiento"
+              />
+              <Input
+                type="text"
+                label="gender"
+                register={register}
+                errors={errors}
+                msgError="Campo obligatorio"
+                title="Género"
+              />
+            </S.FormRow>
+            <S.FormRow>
+              <Input
+                type="text"
+                label="document_type"
+                register={register}
+                errors={errors}
+                msgError="Campo obligatorio"
+                title="Tipo de documento"
+              />
+              <Input
+                type="text"
+                label="document_id"
+                register={register}
+                errors={errors}
+                msgError="Campo obligatorio"
+                title="Numéro de documento"
+              />
+            </S.FormRow>
+            <S.FormRow>
+              <Input
+                type="text"
+                label="email"
+                register={register}
+                errors={errors}
+                msgError="Campo obligatorio"
+                title="E-mail"
+              />
+              <Input
+                type="text"
+                label="phone_number"
+                register={register}
+                errors={errors}
+                msgError="Campo obligatorio"
+                title="Teléfono"
+              />
+            </S.FormRow>
+          </S.Form>
+        </S.Content>
+      </S.Container>
     </S.Wrapper>
   );
 };

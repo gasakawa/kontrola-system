@@ -95,7 +95,15 @@ const ListUsers = ({ company, roleId }: ListUsersProps): JSX.Element => {
           )}
         </S.UserList>
       </S.Wrapper>
-      {showAddUserModal && <AddUserModal />}
+      {showAddUserModal && (
+        <AddUserModal
+          action={value => {
+            if (value === 'close') {
+              setShowAddUserModal(false);
+            }
+          }}
+        />
+      )}
     </>
   );
 };
