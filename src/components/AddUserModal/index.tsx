@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import Input from 'components/Input';
 import Calendar from 'components/Calendar';
 
+import Button from 'components/Button';
 import * as S from './styles';
 
 type AddUserModalProps = {
@@ -26,6 +27,10 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
     action('close');
   };
 
+  const onSubmit = (): void => {
+    console.log(birthDate);
+  };
+
   return (
     <S.Wrapper>
       <S.Container>
@@ -34,7 +39,7 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
         </span>
         <S.Content>
           <S.Title>Adicionar cliente</S.Title>
-          <S.Form>
+          <S.Form onSubmit={handleSubmit(onSubmit)}>
             <S.FormRow>
               <Input
                 type="name"
@@ -99,6 +104,14 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
                 msgError="Campo obligatorio"
                 title="Teléfono"
               />
+            </S.FormRow>
+            <S.FormRow>
+              <S.Buttons>
+                <Button type="submit">Salvar</Button>
+                <Button type="button" onClick={handleClose}>
+                  Cancelar
+                </Button>
+              </S.Buttons>
             </S.FormRow>
           </S.Form>
         </S.Content>

@@ -82,3 +82,14 @@ export const Title = styled.h2`
     font-size: 1rem;
   }
 `;
+
+export const Buttons = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+
+  button {
+    width: 200px;
+  }
+`;

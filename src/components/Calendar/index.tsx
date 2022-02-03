@@ -13,8 +13,6 @@ type CalendarProps = {
 
 const Calendar = ({ label, width, onSelectDate }: CalendarProps): JSX.Element => {
   const [date, setDate] = useState(new Date());
-
-  console.log('render');
   setDefaultLocale('es');
 
   return (
