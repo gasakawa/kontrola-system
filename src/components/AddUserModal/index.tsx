@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from 'hooks/auth';
 
-import Input from 'components/Input';
 import { useForm } from 'react-hook-form';
+
+import Input from 'components/Input';
+import Calendar from 'components/Calendar';
+
 import * as S from './styles';
 
 type AddUserModalProps = {
@@ -10,6 +13,7 @@ type AddUserModalProps = {
 };
 
 const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
+  const [birthDate, setBirthDate] = useState(new Date());
   const { user } = useAuth();
 
   const {
@@ -50,14 +54,7 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
               />
             </S.FormRow>
             <S.FormRow>
-              <Input
-                type="text"
-                label="birthday"
-                register={register}
-                errors={errors}
-                msgError="Campo obligatorio"
-                title="Fecha nascimiento"
-              />
+              <Calendar label="Fecha de nascimiento" width="270px" onSelectDate={(date: Date) => setBirthDate(date)} />
               <Input
                 type="text"
                 label="gender"
