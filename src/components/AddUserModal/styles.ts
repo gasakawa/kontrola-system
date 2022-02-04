@@ -72,9 +72,9 @@ export const FormRow = styled.div`
 `;
 
 export const Title = styled.h2`
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: var(--color-primary);
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
   margin-bottom: 3rem;
 
@@ -86,10 +86,12 @@ export const Title = styled.h2`
 export const Buttons = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   width: 100%;
+  margin-top: 10px;
 
   button {
     width: 200px;
+    margin: 0 10px;
   }
 `;

@@ -97,6 +97,8 @@ const ListUsers = ({ company, roleId }: ListUsersProps): JSX.Element => {
       </S.Wrapper>
       {showAddUserModal && (
         <AddUserModal
+          title="Adicionar cliente"
+          userRole={2}
           action={value => {
             if (value === 'close') {
               setShowAddUserModal(false);

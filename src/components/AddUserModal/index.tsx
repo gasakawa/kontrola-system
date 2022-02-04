@@ -14,10 +14,12 @@ import DocumentType from 'components/DocumentType';
 import * as S from './styles';
 
 type AddUserModalProps = {
+  title: string;
+  userRole: number;
   action: (action: string) => void;
 };
 
-const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
+const AddUserModal = ({ title, userRole, action }: AddUserModalProps): JSX.Element => {
   const [birthDate, setBirthDate] = useState(new Date());
   const [documentType, setDocumentType] = useState(1);
   const { user } = useAuth();
@@ -41,6 +43,7 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
     console.log('🚀 ~ file: index.tsx ~ line 24 ~ user', user);
     console.log('🚀 ~ file: index.tsx ~ line 23 ~ documentType', documentType);
     console.log('🚀 ~ file: index.tsx ~ line 22 ~ birthDate', birthDate);
+    console.log('🚀 ~ file: index.tsx ~ line 23 ~ role', userRole);
   };
 
   return (
@@ -50,7 +53,7 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
           &times;
         </span>
         <S.Content>
-          <S.Title>Adicionar cliente</S.Title>
+          <S.Title>{title}</S.Title>
           <S.Form onSubmit={handleSubmit(onSubmit)}>
             <S.FormRow>
               <Input

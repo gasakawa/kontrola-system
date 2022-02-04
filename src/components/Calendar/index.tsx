@@ -29,6 +29,7 @@ const Calendar = ({ label, width, required, onSelectDate }: CalendarProps): JSX.
         dateFormat="dd/MM/yyyy"
         maxDate={new Date()}
         required={required}
+        showYearDropdown
       />
     </S.Wrapper>
   );
