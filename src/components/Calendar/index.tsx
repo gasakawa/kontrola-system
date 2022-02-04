@@ -9,9 +9,10 @@ type CalendarProps = {
   label: string;
   width: string;
   onSelectDate: (date: Date) => void;
+  required: boolean;
 };
 
-const Calendar = ({ label, width, onSelectDate }: CalendarProps): JSX.Element => {
+const Calendar = ({ label, width, required, onSelectDate }: CalendarProps): JSX.Element => {
   const [date, setDate] = useState(new Date());
   setDefaultLocale('es');
 
@@ -25,9 +26,9 @@ const Calendar = ({ label, width, onSelectDate }: CalendarProps): JSX.Element =>
           onSelectDate(dt);
         }}
         startDate={date}
-        className="filtro-date-picker"
         dateFormat="dd/MM/yyyy"
         maxDate={new Date()}
+        required={required}
       />
     </S.Wrapper>
   );

@@ -23,7 +23,7 @@ export const Container = styled.div`
   width: auto;
   height: auto;
 
-  span {
+  .close-button {
     color: var(--color-primary);
     font-size: 2rem;
     font-weight: 500;

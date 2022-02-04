@@ -17,3 +17,12 @@ export const ErrorAboveElement = styled.span`
   color: #c53030;
   margin-left: 5px;
 `;
+
+export const ErrorInputRadio = styled.span`
+  display: flex;
+  align-self: flex-start;
+  font-size: 0.8rem;
+  margin-top: 2px;
+  color: #c53030;
+  margin-left: 5px;
+`;

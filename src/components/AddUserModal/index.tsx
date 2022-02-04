@@ -7,6 +7,9 @@ import Input from 'components/Input';
 import Calendar from 'components/Calendar';
 
 import Button from 'components/Button';
+import RadioButton from 'components/RadioButton';
+import { Gender } from 'types';
+import validator from 'validator';
 import * as S from './styles';
 
 type AddUserModalProps = {
@@ -16,6 +19,11 @@ type AddUserModalProps = {
 const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
   const [birthDate, setBirthDate] = useState(new Date());
   const { user } = useAuth();
+
+  const genders = [
+    { text: 'Femenino', value: 'F' },
+    { text: 'Masculino', value: 'M' },
+  ] as Gender[];
 
   const {
     handleSubmit,
@@ -27,14 +35,14 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
     action('close');
   };
 
-  const onSubmit = (): void => {
-    console.log(birthDate);
+  const onSubmit = (data: any): void => {
+    console.log(data);
   };
 
   return (
     <S.Wrapper>
       <S.Container>
-        <span onClick={handleClose} role="none">
+        <span onClick={handleClose} role="none" className="close-button">
           &times;
         </span>
         <S.Content>
@@ -48,6 +56,7 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
                 errors={errors}
                 msgError="Campo obligatorio"
                 title="Nombres"
+                required
               />
               <Input
                 type="name"
@@ -56,17 +65,24 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
                 errors={errors}
                 msgError="Campo obligatorio"
                 title="Apellidos"
+                required
               />
             </S.FormRow>
             <S.FormRow>
-              <Calendar label="Fecha de nascimiento" width="270px" onSelectDate={(date: Date) => setBirthDate(date)} />
-              <Input
-                type="text"
+              <Calendar
+                label="Fecha de nascimiento"
+                width="270px"
+                onSelectDate={(date: Date) => setBirthDate(date)}
+                required
+              />
+              <RadioButton
                 label="gender"
-                register={register}
-                errors={errors}
-                msgError="Campo obligatorio"
                 title="Género"
+                options={genders}
+                errorMsg="Campo obligatório"
+                register={register}
+                required
+                errors={errors}
               />
             </S.FormRow>
             <S.FormRow>
@@ -77,6 +93,7 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
                 errors={errors}
                 msgError="Campo obligatorio"
                 title="Tipo de documento"
+                required
               />
               <Input
                 type="text"
@@ -85,6 +102,7 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
                 errors={errors}
                 msgError="Campo obligatorio"
                 title="Numéro de documento"
+                required
               />
             </S.FormRow>
             <S.FormRow>
@@ -95,6 +113,10 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
                 errors={errors}
                 msgError="Campo obligatorio"
                 title="E-mail"
+                required
+                validation={value => {
+                  return validator.isEmail(value) || 'El valor ingresado no parece ser un e-mail';
+                }}
               />
               <Input
                 type="text"
@@ -103,6 +125,7 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
                 errors={errors}
                 msgError="Campo obligatorio"
                 title="Teléfono"
+                required
               />
             </S.FormRow>
             <S.FormRow>
