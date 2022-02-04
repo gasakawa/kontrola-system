@@ -10,6 +10,7 @@ import Button from 'components/Button';
 import RadioButton from 'components/RadioButton';
 import { Gender } from 'types';
 import validator from 'validator';
+import DocumentType from 'components/DocumentType';
 import * as S from './styles';
 
 type AddUserModalProps = {
@@ -18,6 +19,7 @@ type AddUserModalProps = {
 
 const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
   const [birthDate, setBirthDate] = useState(new Date());
+  const [documentType, setDocumentType] = useState(1);
   const { user } = useAuth();
 
   const genders = [
@@ -36,7 +38,9 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
   };
 
   const onSubmit = (data: any): void => {
-    console.log(data);
+    console.log('🚀 ~ file: index.tsx ~ line 24 ~ user', user);
+    console.log('🚀 ~ file: index.tsx ~ line 23 ~ documentType', documentType);
+    console.log('🚀 ~ file: index.tsx ~ line 22 ~ birthDate', birthDate);
   };
 
   return (
@@ -86,15 +90,7 @@ const AddUserModal = ({ action }: AddUserModalProps): JSX.Element => {
               />
             </S.FormRow>
             <S.FormRow>
-              <Input
-                type="text"
-                label="document_type"
-                register={register}
-                errors={errors}
-                msgError="Campo obligatorio"
-                title="Tipo de documento"
-                required
-              />
+              <DocumentType onSelectValue={value => setDocumentType(value)} />
               <Input
                 type="text"
                 label="document_id"
