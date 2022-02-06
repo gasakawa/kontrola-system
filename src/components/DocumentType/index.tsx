@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import api from 'services/api';
 import Select from 'components/Select';
 import { DocumentType as DocType } from 'types';
@@ -17,11 +16,6 @@ const DocumentType = ({ onSelectValue }: DocumentTypeProps): JSX.Element => {
   const [selectedValue, setSelectedValue] = useState(0);
   const [documentTypes, setDocumentTypes] = useState<SelectOptions[]>([]);
 
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
-
   useEffect(() => {
     const loadDocumentTypes = async (): Promise<void> => {
       const response = await api.get<DocType[]>(`/document-types`);
@@ -38,16 +32,14 @@ const DocumentType = ({ onSelectValue }: DocumentTypeProps): JSX.Element => {
   return (
     <div>
       <Select
+        width="270px"
         label="document_type"
         title="Tipo de documento"
-        errorMsg="Campo obligatório"
-        register={register}
         required
-        errors={errors}
         options={documentTypes}
-        onSelectValue={(value: number) => {
-          onSelectValue(value);
-          setSelectedValue(value);
+        onSelectValue={value => {
+          onSelectValue(Number(value));
+          setSelectedValue(Number(value));
         }}
         selectedValue={selectedValue}
       />

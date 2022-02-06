@@ -23,3 +23,19 @@ export type UserProfile = {
     overdue: boolean;
   };
 };
+
+export type UserDTO = {
+  username: string;
+  phone: string;
+  birthDate: string;
+  gender: string;
+  address: string;
+  givenName: string;
+  familyName: string;
+  email: string;
+  documentId: string;
+  companyId: string;
+  roleId: number;
+  documentType: number;
+  headquarterId: number;
+};

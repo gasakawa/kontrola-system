@@ -26,6 +26,7 @@ type ButtonTable = {
   label: string;
   show: boolean;
   width: string;
+  title: string;
   onClick: () => void;
 };
 
@@ -149,7 +150,9 @@ const Table = ({
             <S.ButtonsContainer>
               <Button
                 type="button"
+                disabled={buttonAddRecord.enabled}
                 style={{ width: buttonAddRecord.width }}
+                title={buttonAddRecord.title}
                 onClick={() => {
                   buttonAddRecord.onClick();
                 }}

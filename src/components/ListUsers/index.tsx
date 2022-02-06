@@ -85,7 +85,8 @@ const ListUsers = ({ company, roleId }: ListUsersProps): JSX.Element => {
               buttonAddRecord={{
                 label: 'Adicionar cliente',
                 show: true,
-                enabled: !!userList.allowAddNewUser,
+                enabled: !userList.allowAddNewUser,
+                title: userList.allowAddNewUser ? '' : 'Ha alcanzado el límite de clientes',
                 width: '200px',
                 onClick: () => {
                   setShowAddUserModal(!showAddUserModal);
@@ -98,7 +99,7 @@ const ListUsers = ({ company, roleId }: ListUsersProps): JSX.Element => {
       {showAddUserModal && (
         <AddUserModal
           title="Adicionar cliente"
-          userRole={2}
+          userRole={roleId}
           action={value => {
             if (value === 'close') {
               setShowAddUserModal(false);

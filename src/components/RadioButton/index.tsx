@@ -41,7 +41,7 @@ const RadioButton = ({
           <React.Fragment key={opt.value}>
             <input
               type="radio"
-              value={opt.text}
+              value={opt.value}
               {...register(label, { required: required && errorMsg ? errorMsg : false, validate: validation })}
               {...rest}
             />
