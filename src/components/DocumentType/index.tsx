@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { UseFormRegister } from 'react-hook-form';
+
 import api from 'services/api';
 import Select from 'components/Select';
 import { DocumentType as DocType } from 'types';
 
+type FormData = {
+  [key: string]: any;
+};
+
 type DocumentTypeProps = {
-  onSelectValue: (value: number) => void;
+  register: UseFormRegister<FormData>;
+  errors: any;
 };
 
 type SelectOptions = {
@@ -12,8 +19,7 @@ type SelectOptions = {
   value: number;
 };
 
-const DocumentType = ({ onSelectValue }: DocumentTypeProps): JSX.Element => {
-  const [selectedValue, setSelectedValue] = useState(0);
+const DocumentType = ({ register, errors }: DocumentTypeProps): JSX.Element => {
   const [documentTypes, setDocumentTypes] = useState<SelectOptions[]>([]);
 
   useEffect(() => {
@@ -23,7 +29,7 @@ const DocumentType = ({ onSelectValue }: DocumentTypeProps): JSX.Element => {
         name: docs.name,
         value: docs.id,
       }));
-      setDocumentTypes(listDocuments);
+      setDocumentTypes([{ name: 'Selecione una opción', value: 0 }, ...listDocuments]);
     };
 
     loadDocumentTypes();
@@ -33,15 +39,14 @@ const DocumentType = ({ onSelectValue }: DocumentTypeProps): JSX.Element => {
     <div>
       <Select
         width="270px"
-        label="document_type"
+        label="documentType"
         title="Tipo de documento"
         required
         options={documentTypes}
-        onSelectValue={value => {
-          onSelectValue(Number(value));
-          setSelectedValue(Number(value));
-        }}
-        selectedValue={selectedValue}
+        register={register}
+        errors={errors}
+        errorMessage="Campo obligatorio"
+        type="number"
       />
     </div>
   );

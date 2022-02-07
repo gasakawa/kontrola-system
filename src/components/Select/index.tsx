@@ -1,4 +1,7 @@
+import { ErrorMessage } from '@hookform/error-message';
 import React from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import { ErrorInputText } from 'styles/errors';
 
 import * as S from './styles';
 
@@ -7,13 +10,19 @@ type Options = {
   value: number | string;
 };
 
+type FormData = {
+  [key: string]: any;
+};
+
 type Props = {
   label: string;
   title: string;
   options: Options[];
-  selectedValue: number | string;
+  errors: any;
+  errorMessage: string;
   width: string;
-  onSelectValue: (value: number | string) => void;
+  type: string;
+  register: UseFormRegister<FormData>;
 };
 
 type SelectProps = React.HTMLProps<HTMLSelectElement> & Props;
@@ -22,19 +31,28 @@ const Select = ({
   label,
   title,
   options,
-  selectedValue,
   width = '270px',
-  onSelectValue,
+  type = 'text',
+  errors,
+  required,
+  errorMessage,
+  register,
   ...rest
 }: SelectProps): JSX.Element => {
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    onSelectValue(e.currentTarget.value);
-  };
+  //   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+  //     onSelectValue(e.currentTarget.value);
+  //   };
   return (
     <S.Wrapper>
       <S.Label>{title}</S.Label>
-      <S.SelectContainer width={width}>
-        <select name={label} onChange={handleChange} defaultValue={selectedValue} {...rest}>
+      <S.SelectContainer width={width} hasErrors={!!errors[label]}>
+        <select
+          {...register(label, {
+            required: required && errorMessage ? errorMessage : false,
+            valueAsNumber: type === 'number',
+          })}
+          {...rest}
+        >
           {options.map(option => (
             <option key={`opt-${option.value}`} value={option.value}>
               {option.name}
@@ -42,6 +60,9 @@ const Select = ({
           ))}
         </select>
       </S.SelectContainer>
+      <ErrorInputText>
+        <ErrorMessage errors={errors} name={label} />
+      </ErrorInputText>
     </S.Wrapper>
   );
 };

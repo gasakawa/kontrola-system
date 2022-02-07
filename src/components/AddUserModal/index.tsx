@@ -25,7 +25,7 @@ import 'react-phone-input-2/lib/style.css';
 type AddUserModalProps = {
   title: string;
   userRole: number;
-  action: (action: string) => void;
+  actions: (close: boolean, update: boolean) => void;
 };
 
 type SignupCodeResponse = {
@@ -33,12 +33,11 @@ type SignupCodeResponse = {
   isConfirmed: boolean;
 };
 
-const AddUserModal = ({ title, userRole, action }: AddUserModalProps): JSX.Element => {
+const AddUserModal = ({ title, userRole, actions }: AddUserModalProps): JSX.Element => {
   const [birthDate, setBirthDate] = useState(new Date());
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [documentType, setDocumentType] = useState(1);
   const [phoneWihtError, setPhoneWithError] = useState(false);
-  const [headquarter, setHeadquarter] = useState(1);
+
   const { user } = useAuth();
 
   const genders = [
@@ -49,54 +48,68 @@ const AddUserModal = ({ title, userRole, action }: AddUserModalProps): JSX.Eleme
   const {
     handleSubmit,
     register,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm();
 
   const handleClose = (): void => {
-    action('close');
+    actions(true, false);
   };
 
   const onSubmit = async (data: UserDTO): Promise<void> => {
+    const { username, gender, address, givenName, familyName, documentId, documentType, headquarterId } = data;
+
     setPhoneWithError(false);
     if (phoneNumber.length === 0) {
       setPhoneWithError(true);
     }
 
-    const { username, gender, address, givenName, familyName, documentId } = data;
-
-    try {
-      const { data: response }: { data: SignupCodeResponse } = await api({
-        url: `user/signup`,
-        method: 'POST',
-        data: {
-          username,
-          phoneNumber,
-          birthdate: format(birthDate, 'yyyy-MM-dd'),
-          gender,
-          address,
-          givenName,
-          familyName,
-          documentId,
-          documentType,
-          roleId: userRole,
-          headquarterId: headquarter,
-          email: username,
-          companyId: user.data.company,
-        },
+    if (documentType === 0) {
+      setError('documentType', {
+        type: 'manual',
+        message: 'Campo obligatorio',
       });
-      if (response.isConfirmed) {
-        toast.success('Usuario adicionado con éxito, ahora debe confirmar el e-mail');
-        action('close');
+    } else if (headquarterId === 0) {
+      setError('headquarterId', {
+        type: 'manual',
+        message: 'Campo obligatorio',
+      });
+    } else {
+      try {
+        const { data: response }: { data: SignupCodeResponse } = await api({
+          url: `user/signup`,
+          method: 'POST',
+          data: {
+            username,
+            phoneNumber,
+            birthdate: format(birthDate, 'yyyy-MM-dd'),
+            gender,
+            address,
+            givenName,
+            familyName,
+            documentId,
+            documentType: Number(documentType),
+            roleId: userRole,
+            headquarterId: Number(headquarterId),
+            email: username,
+            companyId: user.data.company,
+          },
+        });
+        if (!response.isConfirmed) {
+          toast.success('Usuario adicionado con éxito, ahora debe confirmar el e-mail');
+          actions(true, true);
+        }
+      } catch (err: any) {
+        const { message } = handleError(err);
+        toast.error(message);
       }
-    } catch (err: any) {
-      const { message } = handleError(err);
-      toast.error(message);
     }
   };
 
   return (
     <S.Wrapper>
       {isSubmitting && <Loader />}
+
       <S.Container>
         <span onClick={handleClose} role="none" className="close-button">
           &times;
@@ -142,7 +155,7 @@ const AddUserModal = ({ title, userRole, action }: AddUserModalProps): JSX.Eleme
               />
             </S.FormRow>
             <S.FormRow>
-              <DocumentType onSelectValue={value => setDocumentType(value)} />
+              <DocumentType register={register} errors={errors} />
               <Input
                 type="text"
                 label="documentId"
@@ -188,17 +201,18 @@ const AddUserModal = ({ title, userRole, action }: AddUserModalProps): JSX.Eleme
               {userRole === 2 && (
                 <Select
                   width="270px"
-                  label="headquarter"
+                  label="headquarterId"
                   title="Sede"
                   required
                   options={[
+                    { name: 'Seleccione una opción', value: '0' },
                     { name: 'Recreo', value: '1' },
                     { name: 'Llanogrande', value: '2' },
                   ]}
-                  onSelectValue={value => {
-                    setHeadquarter(Number(value));
-                  }}
-                  selectedValue={headquarter}
+                  register={register}
+                  errors={errors}
+                  errorMessage="Campo obligatorio"
+                  type="number"
                 />
               )}
             </S.FormRow>

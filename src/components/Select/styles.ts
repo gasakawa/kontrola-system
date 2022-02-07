@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface SelectContainerProps {
   width: string;
+  hasErrors: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -41,7 +42,10 @@ export const SelectContainer = styled.div<SelectContainerProps>`
     background: #fff;
     padding: 0.571rem 0.3rem;
 
-    option {
-    }
+    ${props =>
+      props.hasErrors &&
+      css`
+        border-color: #c53030;
+      `}
   }
 `;

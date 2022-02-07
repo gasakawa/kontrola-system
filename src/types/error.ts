@@ -4,3 +4,8 @@ export type ResponseError = {
   code: string;
   name: string;
 };
+
+export type FormError = {
+  field: string;
+  errorMessage: string;
+};

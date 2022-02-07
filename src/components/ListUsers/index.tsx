@@ -45,6 +45,7 @@ const ListUsers = ({ company, roleId }: ListUsersProps): JSX.Element => {
   const [direction, setDirection] = useState('asc');
   const [filterQuery, setFilterQuery] = useState('');
   const [showAddUserModal, setShowAddUserModal] = useState(false);
+  const [updateList, setUpdateList] = useState(false);
 
   useEffect(() => {
     const loadUsers = async (): Promise<void> => {
@@ -55,7 +56,7 @@ const ListUsers = ({ company, roleId }: ListUsersProps): JSX.Element => {
       setUserList(response.data);
     };
     loadUsers();
-  }, [company, roleId, currentPage, currentPageSize, direction, filterQuery]);
+  }, [company, roleId, currentPage, currentPageSize, direction, filterQuery, updateList]);
 
   return (
     <>
@@ -100,8 +101,11 @@ const ListUsers = ({ company, roleId }: ListUsersProps): JSX.Element => {
         <AddUserModal
           title="Adicionar cliente"
           userRole={roleId}
-          action={value => {
-            if (value === 'close') {
+          actions={(close: boolean, update: boolean) => {
+            if (update) {
+              setUpdateList(true);
+            }
+            if (close) {
               setShowAddUserModal(false);
             }
           }}
