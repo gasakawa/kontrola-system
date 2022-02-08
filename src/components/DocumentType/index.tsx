@@ -3,7 +3,7 @@ import { UseFormRegister } from 'react-hook-form';
 
 import api from 'services/api';
 import Select from 'components/Select';
-import { DocumentType as DocType } from 'types';
+import { DocumentType as DocType, SelectOptions } from 'types';
 
 type FormData = {
   [key: string]: any;
@@ -12,11 +12,6 @@ type FormData = {
 type DocumentTypeProps = {
   register: UseFormRegister<FormData>;
   errors: any;
-};
-
-type SelectOptions = {
-  name: string;
-  value: number;
 };
 
 const DocumentType = ({ register, errors }: DocumentTypeProps): JSX.Element => {

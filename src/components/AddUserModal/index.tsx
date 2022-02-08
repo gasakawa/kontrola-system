@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from 'hooks/auth';
 
 import { useForm } from 'react-hook-form';
@@ -13,11 +13,12 @@ import { Gender, UserDTO } from 'types';
 import validator from 'validator';
 import PhoneNumber from 'components/PhoneNumber';
 import DocumentType from 'components/DocumentType';
-import Select from 'components/Select';
 import api from 'services/api';
 import { handleError } from 'utils/handle-errors';
 import { toast } from 'react-toastify';
 import Loader from 'components/Loader';
+import HeadquarterList from 'components/HeadquarterList';
+
 import * as S from './styles';
 
 import 'react-phone-input-2/lib/style.css';
@@ -38,19 +39,25 @@ const AddUserModal = ({ title, userRole, actions }: AddUserModalProps): JSX.Elem
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneWihtError, setPhoneWithError] = useState(false);
 
+  const {
+    handleSubmit,
+    register,
+    setError,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  useEffect(() => {
+    setValue('documentType', 0);
+    setValue('headquarterId', 0);
+  }, [setValue]);
+
   const { user } = useAuth();
 
   const genders = [
     { text: 'Femenino', value: 'F' },
     { text: 'Masculino', value: 'M' },
   ] as Gender[];
-
-  const {
-    handleSubmit,
-    register,
-    setError,
-    formState: { errors, isSubmitting },
-  } = useForm();
 
   const handleClose = (): void => {
     actions(true, false);
@@ -199,23 +206,7 @@ const AddUserModal = ({ title, userRole, actions }: AddUserModalProps): JSX.Elem
                   return validator.isEmail(value) || 'El valor ingresado no parece ser un e-mail';
                 }}
               />
-              {userRole === 2 && (
-                <Select
-                  width="270px"
-                  label="headquarterId"
-                  title="Sede"
-                  required
-                  options={[
-                    { name: 'Seleccione una opción', value: '0' },
-                    { name: 'Recreo', value: '1' },
-                    { name: 'Llanogrande', value: '2' },
-                  ]}
-                  register={register}
-                  errors={errors}
-                  errorMessage="Campo obligatorio"
-                  type="number"
-                />
-              )}
+              {userRole === 2 && <HeadquarterList register={register} errors={errors} companyId={user.data.company} />}
             </S.FormRow>
             <S.FormRow>
               <S.Buttons>

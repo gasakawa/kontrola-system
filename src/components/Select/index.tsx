@@ -39,9 +39,6 @@ const Select = ({
   register,
   ...rest
 }: SelectProps): JSX.Element => {
-  //   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-  //     onSelectValue(e.currentTarget.value);
-  //   };
   return (
     <S.Wrapper>
       <S.Label>{title}</S.Label>
