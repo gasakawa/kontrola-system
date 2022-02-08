@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PhoneInput from 'react-phone-input-2';
 import es from 'react-phone-input-2/lang/es.json';
 import { ErrorInputText } from 'styles/errors';
@@ -12,6 +12,7 @@ type PhoneNumberProps = {
   error: boolean;
   errorMessage: string;
   disabled: boolean;
+  value: string;
   onChangeValue: (value: string) => void;
 };
 
@@ -22,21 +23,20 @@ const PhoneNumber = ({
   error,
   errorMessage,
   disabled,
+  value,
   onChangeValue,
 }: PhoneNumberProps): JSX.Element => {
-  const [phoneNumber, setPhoneNumber] = useState('');
   return (
     <S.Wrapper>
       <S.Label>
         <label htmlFor={label}>{title}</label>
       </S.Label>
       <PhoneInput
-        value={phoneNumber}
+        value={value}
         country="co"
         onlyCountries={['co']}
         onChange={phone => {
           onChangeValue(phone);
-          setPhoneNumber(phone);
         }}
         inputProps={{
           name: label,

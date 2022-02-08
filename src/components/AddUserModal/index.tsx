@@ -191,6 +191,7 @@ const AddUserModal = ({ title, userRole, actions }: AddUserModalProps): JSX.Elem
                 errorMessage="Campo obligatorio"
                 error={phoneWihtError}
                 disabled={false}
+                value=""
               />
             </S.FormRow>
             <S.FormRow>

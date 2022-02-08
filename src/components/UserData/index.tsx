@@ -9,6 +9,7 @@ import Loader from 'components/Loader';
 import api from 'services/api';
 import { toast } from 'react-toastify';
 import { handleError } from 'utils/handle-errors';
+import PhoneNumber from 'components/PhoneNumber';
 import * as S from './styles';
 
 type ProfileInfoProps = {
@@ -19,11 +20,13 @@ type EditProfileFormData = {
   family_name: string;
   given_name: string;
   address: string;
-  phone: string;
 };
 
 const UserData = ({ user: { user } }: ProfileInfoProps): JSX.Element => {
   const [enabled, setEnabled] = useState(false);
+  const [userPhone, setUserPhone] = useState('');
+  const [phoneWihtError, setPhoneWithError] = useState(false);
+
   const {
     handleSubmit,
     register,
@@ -37,24 +40,28 @@ const UserData = ({ user: { user } }: ProfileInfoProps): JSX.Element => {
     setValue('family_name', familyName);
     setValue('address', address);
     setValue('phone', phoneNumber);
+    setUserPhone(phoneNumber);
   }, [setValue, user]);
 
   const onSubmit = async (data: EditProfileFormData): Promise<void> => {
-    const { family_name, given_name, address, phone } = data;
+    const { family_name, given_name, address } = data;
     try {
       setEnabled(false);
-      if (
+      setPhoneWithError(false);
+      if (userPhone.length === 0) {
+        setPhoneWithError(true);
+      } else if (
         family_name !== user.familyName ||
         given_name !== user.givenName ||
         address !== user.address ||
-        phone !== user.phoneNumber
+        userPhone !== user.phoneNumber
       ) {
         const response = await api({
           url: `/user/updated/${user.id}`,
           method: 'PUT',
           data: {
             address,
-            phoneNumber: phone,
+            phoneNumber: userPhone,
             givenName: given_name,
             familyName: family_name,
           },
@@ -110,16 +117,16 @@ const UserData = ({ user: { user } }: ProfileInfoProps): JSX.Element => {
             disabled={!enabled}
             title="Apellidos"
           />
-          <Input
-            type="text"
+
+          <PhoneNumber
+            title="Telefóno"
+            onChangeValue={phone => setUserPhone(phone)}
+            width="270px"
             label="phone"
-            register={register}
-            placeholder="Teléfono"
-            required
-            errors={errors}
-            msgError="Campo obligatorio"
+            errorMessage="Campo obligatorio"
+            error={phoneWihtError}
             disabled={!enabled}
-            title="Teléfono"
+            value={userPhone}
           />
         </S.FormRow>
         <S.FormRow>
